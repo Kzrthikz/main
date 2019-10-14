@@ -21,12 +21,7 @@ public class AddDeadlineCommandParser implements Parser<AddDeadlineCommand>  {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddDeadlineCommand.MESSAGE_USAGE));
         }
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEADLINE);
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddDeadlineCommand.MESSAGE_USAGE), ive);
-        }
+        Index index = Index.fromOneBased(Integer.parseInt(trimmedArgs));
         String remark = argMultimap.getValue(PREFIX_DEADLINE).orElse("");
 
         return new AddDeadlineCommand(index, remark);
