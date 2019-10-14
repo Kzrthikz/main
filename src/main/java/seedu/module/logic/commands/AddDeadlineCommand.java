@@ -23,16 +23,15 @@ public class AddDeadlineCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New deadline added: %1$s";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Deadline: %2$S";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added deadline to Module: %1$s";
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
 
     private final Index index;
-    private final Deadline deadlineDescription;
+    private final Deadline deadline;
 
-    public AddDeadlineCommand(Index index,  Deadline deadlineDescription) {
+    public AddDeadlineCommand(Index index,  Deadline deadline) {
         this.index = index;
-        this.deadlineDescription = deadlineDescription;
+        this.deadline = deadline;
     }
 
     @Override
@@ -45,9 +44,9 @@ public class AddDeadlineCommand extends Command {
 
         TrackedModule moduleToEdit = lastShownList.get(index.getZeroBased());
         ArchivedModule am = new ArchivedModule(moduleToEdit.getModuleCode(), moduleToEdit.getTitle(), moduleToEdit.getDescription());
-        TrackedModule editedModule = new TrackedModule(am , deadlineDescription);
+        TrackedModule editedModule = new TrackedModule(am , deadline);
 
-        model.setModuleBook(moduleToEdit, editedModule);
+        model.setModule(moduleToEdit, editedModule);
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES;
 
         return new CommandResult(generateSuccessMessage(editedModule));
@@ -58,7 +57,7 @@ public class AddDeadlineCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(TrackedModule moduleToEdit) {
-        String message = !deadlineDescription.value.isEmpty() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
+        String message = !deadline.value.isEmpty() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
         return String.format(message, moduleToEdit);
     }
 
@@ -71,6 +70,6 @@ public class AddDeadlineCommand extends Command {
             return false;
         }
         AddDeadlineCommand e = (AddDeadlineCommand) other;
-        return index.equals(e.deadlineDescription);
+        return index.equals(e.deadline);
     }
 }
