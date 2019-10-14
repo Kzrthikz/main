@@ -10,4 +10,6 @@ public interface Module {
     String getTitle();
 
     String getDescription();
+
+    Deadline getDeadline();
 }

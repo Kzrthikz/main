@@ -9,12 +9,18 @@ public class TrackedModule implements Module {
 
     // Identity field
     private final ArchivedModule archivedModule;
+    private final Deadline deadline;
 
     /**
      * Every field must be present and not null.
      */
     public TrackedModule(ArchivedModule archivedModule) {
         this.archivedModule = archivedModule;
+        deadline = null;
+    }
+    public TrackedModule(ArchivedModule archivedModule, Deadline deadline) {
+        this.archivedModule = archivedModule;
+        this.deadline = deadline;
     }
 
     public String getModuleCode() {
@@ -27,6 +33,10 @@ public class TrackedModule implements Module {
 
     public String getDescription() {
         return archivedModule.getDescription();
+    }
+
+    public Deadline getDeadline() {
+        return deadline;
     }
 
     /**
@@ -75,7 +85,9 @@ public class TrackedModule implements Module {
                 .append(" Title: ")
                 .append(getTitle())
                 .append(" Description: ")
-                .append(getDescription());
+                .append(getDescription())
+                .append(" Deadline: ")
+                .append(getDeadline());
         return builder.toString();
     }
 

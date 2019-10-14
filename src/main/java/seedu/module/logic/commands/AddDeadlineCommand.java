@@ -1,8 +1,16 @@
 package seedu.module.logic.commands;
 
+import java.util.List;
+
+import javax.sound.midi.Track;
+
+import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
+import seedu.module.model.module.ArchivedModule;
+import seedu.module.model.module.Deadline;
+import seedu.module.model.module.TrackedModule;
 
 public class AddDeadlineCommand extends Command {
     public static final String COMMAND_WORD = "add_deadline";
@@ -13,21 +21,45 @@ public class AddDeadlineCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + "d/ quiz submission /by 2/2/2019 2359";
 
-    public static final String MESSAGE_SUCCESS = "New module added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New deadline added: %1$s";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Deadline: %2$S";
+    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added deadline to Module: %1$s";
+    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
 
     private final Index index;
-    private final String deadlineDescription;
+    private final Deadline deadlineDescription;
 
-    public AddDeadlineCommand(Index index,  String deadlineDescription) {
+    public AddDeadlineCommand(Index index,  Deadline deadlineDescription) {
         this.index = index;
         this.deadlineDescription = deadlineDescription;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException{
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), deadlineDescription));
+        List<TrackedModule> lastShownList = model.getFilteredModuleList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);
+        }
+
+        TrackedModule moduleToEdit = lastShownList.get(index.getZeroBased());
+        ArchivedModule am = new ArchivedModule(moduleToEdit.getModuleCode(), moduleToEdit.getTitle(), moduleToEdit.getDescription());
+        TrackedModule editedModule = new TrackedModule(am , deadlineDescription);
+
+        model.setModuleBook(moduleToEdit, editedModule);
+        model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES;
+
+        return new CommandResult(generateSuccessMessage(editedModule));
+    }
+
+    /**
+     * Generates a command execution success message based on whether the remark is added to or removed from
+     * {@code personToEdit}.
+     */
+    private String generateSuccessMessage(TrackedModule moduleToEdit) {
+        String message = !deadlineDescription.value.isEmpty() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
+        return String.format(message, moduleToEdit);
     }
 
     @Override

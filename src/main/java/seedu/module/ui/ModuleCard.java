@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.module.model.module.Module;
+import seedu.module.model.module.TrackedModule;
 
 /**
  * An UI component that displays information of a {@code Module}.
@@ -33,6 +34,8 @@ public class ModuleCard extends UiPart<Region> {
     private Label description;
     @FXML
     private Label id;
+    @FXML
+    private Label deadline;
 
     public ModuleCard(Module module, int displayedIndex) {
         super(FXML);
@@ -41,6 +44,7 @@ public class ModuleCard extends UiPart<Region> {
         moduleCode.setText(module.getModuleCode());
         title.setText(module.getTitle());
         description.setText(module.getDescription());
+        deadline.setText(module.getDeadline().value);
     }
 
     @Override
