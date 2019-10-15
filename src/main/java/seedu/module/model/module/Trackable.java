@@ -6,5 +6,4 @@ package seedu.module.model.module;
 public interface Trackable extends Module {
 
     Deadline getDeadline();
-
 }
