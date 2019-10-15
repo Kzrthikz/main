@@ -35,7 +35,7 @@ class JsonAdaptedModule {
      */
     public JsonAdaptedModule(TrackedModule source) {
         moduleCode = source.getModuleCode();
-        deadline = source.getDeadline().value;
+        deadline = source.getDeadline().getValue();
     }
 
     /**

@@ -9,7 +9,6 @@ import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
-import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.Deadline;
 import seedu.module.model.module.TrackedModule;
 
@@ -48,11 +47,8 @@ public class AddDeadlineCommand extends Command {
         }
 
         TrackedModule moduleToEdit = lastShownList.get(index.getZeroBased());
-
-        TrackedModule editedModule = new TrackedModule(
-                new ArchivedModule(moduleToEdit.getModuleCode(),
-                moduleToEdit.getTitle(), moduleToEdit.getDescription()),
-                deadline);
+        TrackedModule editedModule = lastShownList.get(index.getZeroBased());
+        editedModule.setDeadline(deadline);
 
         model.setModule(moduleToEdit, editedModule);
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
@@ -66,7 +62,8 @@ public class AddDeadlineCommand extends Command {
      * {@code moduleToEdit}.
      */
     private String generateSuccessMessage(TrackedModule moduleToEdit) {
-        String message = !deadline.value.isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;
+        String message = !deadline.getValue().isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS
+                : MESSAGE_DELETE_DEADLINE_SUCCESS;
         return String.format(message, moduleToEdit);
     }
 

@@ -61,7 +61,6 @@ public class ModuleBook implements ReadOnlyModuleBook {
      */
     public void setModule(TrackedModule target, TrackedModule editedModule) {
         requireNonNull(editedModule);
-
         modules.setModule(target, editedModule);
     }
 

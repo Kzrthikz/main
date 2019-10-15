@@ -7,11 +7,19 @@ import static java.util.Objects.requireNonNull;
  * Guarantees: immutable; is always valid
  */
 public class Deadline {
-    public final String value;
+    private String value;
 
     public Deadline(String deadline) {
         requireNonNull(deadline);
         value = deadline;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String newValue) {
+        value = newValue;
     }
 
     @Override

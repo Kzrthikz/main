@@ -25,16 +25,16 @@ import org.junit.jupiter.api.Test;
 
 public class ModuleBookTest {
 
-    private final ModuleBook addressBook = new ModuleBook();
+    private final ModuleBook moduleBook = new ModuleBook();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getModuleList());
+        assertEquals(Collections.emptyList(), moduleBook.getModuleList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.resetData(null));
+        assertThrows(NullPointerException.class, () -> moduleBook.resetData(null));
     }
 
     //     @Test
@@ -56,8 +56,8 @@ public class ModuleBookTest {
     //      }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.hasModule(null));
+    public void hasModule_nullModule_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> moduleBook.hasModule(null));
     }
 }
 

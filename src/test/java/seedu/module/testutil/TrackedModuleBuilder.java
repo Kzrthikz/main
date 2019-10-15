@@ -1,6 +1,7 @@
 package seedu.module.testutil;
 
 import seedu.module.model.module.ArchivedModule;
+import seedu.module.model.module.Deadline;
 import seedu.module.model.module.TrackedModule;
 
 /**
@@ -11,28 +12,32 @@ public class TrackedModuleBuilder {
     public static final String DEFAULT_MODULE_CODE = "CS2103T";
     public static final String DEFAULT_TITLE = "Software Engineering";
     public static final String DEFAULT_DESCRIPTION = "Lorem Ipsum";
+    public static final Deadline DEFAULT_DEADLINE = new Deadline("Description");
 
     private String moduleCode;
     private String title;
     private String description;
+    private Deadline deadline;
 
     public TrackedModuleBuilder() {
         moduleCode = DEFAULT_MODULE_CODE;
         title = DEFAULT_TITLE;
         description = DEFAULT_DESCRIPTION;
+        deadline = DEFAULT_DEADLINE;
     }
 
     /**
-     * Initializes the ArchivedModuleBuilder with the data of {@code moduleToCopy}.
+     * Initializes the TrackedModuleBuilder with the data of {@code moduleToCopy}.
      */
     public TrackedModuleBuilder(TrackedModule moduleToCopy) {
         moduleCode = moduleToCopy.getModuleCode();
         title = moduleToCopy.getTitle();
         description = moduleToCopy.getDescription();
+        deadline = moduleToCopy.getDeadline();
     }
 
     /**
-     * Sets the moduleCode of the {@code ArchivedModule} that we are building.
+     * Sets the moduleCode of the {@code TrackedModule} that we are building.
      */
     public TrackedModuleBuilder withModuleCode(String moduleCode) {
         this.moduleCode = moduleCode;
@@ -40,7 +45,7 @@ public class TrackedModuleBuilder {
     }
 
     /**
-     * Sets the title of the {@code ArchivedModule} that we are building.
+     * Sets the title of the {@code TrackedModule} that we are building.
      */
     public TrackedModuleBuilder withTitle(String title) {
         this.title = title;
@@ -48,7 +53,15 @@ public class TrackedModuleBuilder {
     }
 
     /**
-     * Sets the description of the {@code ArchivedModule} that we are building.
+     * Sets the description of the {@code TrackedModule} that we are building.
+     */
+    public TrackedModuleBuilder withDeadline(Deadline deadline) {
+        this.deadline = deadline;
+        return this;
+    }
+
+    /**
+     * Sets the description of the {@code TrackedModule} that we are building.
      */
     public TrackedModuleBuilder withDescription(String description) {
         this.description = description;
@@ -56,6 +69,6 @@ public class TrackedModuleBuilder {
     }
 
     public TrackedModule build() {
-        return new TrackedModule(new ArchivedModule(moduleCode, title, description));
+        return new TrackedModule(new ArchivedModule(moduleCode, title, description), deadline);
     }
 }

@@ -5,11 +5,11 @@ import java.util.Objects;
 /**
  * Represents a TrackedModule in the ModuleList.
  */
-public class TrackedModule implements ModuleTracked {
+public class TrackedModule implements Module, Trackable {
 
     // Identity field
     private final ArchivedModule archivedModule;
-    private final Deadline deadline;
+    private Deadline deadline;
 
     /**
      * Every field must be present and not null.
@@ -37,6 +37,10 @@ public class TrackedModule implements ModuleTracked {
 
     public Deadline getDeadline() {
         return deadline;
+    }
+
+    public void setDeadline(Deadline newDeadline) {
+        this.deadline.setValue(newDeadline.getValue());
     }
 
     /**
@@ -82,12 +86,9 @@ public class TrackedModule implements ModuleTracked {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getModuleCode())
-                .append(" Title: ")
-                .append(getTitle())
-                .append(" Description: ")
-                .append(getDescription())
-                .append(" Deadline: ")
-                .append(getDeadline().toString());
+                .append(" Title: ").append(getTitle())
+                .append(" Description: ").append(getDescription())
+                .append(" Deadline: ").append(getDeadline().toString());
         return builder.toString();
     }
 
