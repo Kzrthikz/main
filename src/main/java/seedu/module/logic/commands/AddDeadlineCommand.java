@@ -29,7 +29,7 @@ public class AddDeadlineCommand extends Command {
             + PREFIX_DEADLINE + " quiz submission /by 2/2/2019 2359";
 
     public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Added deadline to Module: %1$s";
-    public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed remark from Person: %1$s";
+    public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed deadline from module: %1$s";
 
     private final Index index;
     private final Deadline deadline;
@@ -49,9 +49,10 @@ public class AddDeadlineCommand extends Command {
 
         TrackedModule moduleToEdit = lastShownList.get(index.getZeroBased());
 
-        ArchivedModule archivedModule = new ArchivedModule(moduleToEdit.getModuleCode(),
-                moduleToEdit.getTitle(), moduleToEdit.getDescription());
-        TrackedModule editedModule = new TrackedModule(archivedModule , deadline);
+        TrackedModule editedModule = new TrackedModule(
+                new ArchivedModule(moduleToEdit.getModuleCode(),
+                moduleToEdit.getTitle(), moduleToEdit.getDescription()),
+                deadline);
 
         model.setModule(moduleToEdit, editedModule);
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
@@ -62,7 +63,7 @@ public class AddDeadlineCommand extends Command {
 
     /**
      * Generates a command execution success message based on whether the remark is added to or removed from
-     * {@code personToEdit}.
+     * {@code moduleToEdit}.
      */
     private String generateSuccessMessage(TrackedModule moduleToEdit) {
         String message = !deadline.value.isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;

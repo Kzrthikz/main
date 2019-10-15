@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.module.model.module.Module;
+import seedu.module.model.module.ModuleTracked;
 
 /**
  * An UI component that displays information of a {@code Module}.
@@ -21,7 +21,7 @@ public class ModuleCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Module module;
+    public final ModuleTracked module;
 
     @FXML
     private HBox cardPane;
@@ -36,7 +36,7 @@ public class ModuleCard extends UiPart<Region> {
     @FXML
     private Label deadline;
 
-    public ModuleCard(Module module, int displayedIndex) {
+    public ModuleCard(ModuleTracked module, int displayedIndex) {
         super(FXML);
         this.module = module;
         id.setText(displayedIndex + ". ");

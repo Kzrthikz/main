@@ -116,8 +116,8 @@ public interface Model {
 
     /**
      * Replaces the given module {@code target} with {@code editedModule}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedModule} must not be the same as another existing module in the address book.
+     * {@code target} must exist in the module book.
+     * The module identity of {@code editedModule} must not be the same as another existing module in the module book.
      */
     void setModule(TrackedModule target, TrackedModule editedModule);
 }

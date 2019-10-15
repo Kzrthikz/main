@@ -92,12 +92,11 @@ public class ModelManager implements Model {
 
     /**
      * Replaces the given module {@code target} in the list with {@code editedModule}.
-     * {@code target} must exist in the address book.
-     * The module identity of {@code editedModule} must not be the same as another existing module in the address book.
+     * {@code target} must exist in the module book.
+     * The module identity of {@code editedModule} must not be the same as another existing module in the module book.
      */
     public void setModule(TrackedModule target, TrackedModule editedModule) {
         requireNonNull(editedModule);
-        //ModuleBook modules = new ModuleBook();
         moduleBook.setModule(target, editedModule);
     }
 

@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Represents a TrackedModule in the ModuleList.
  */
-public class TrackedModule implements Module {
+public class TrackedModule implements ModuleTracked {
 
     // Identity field
     private final ArchivedModule archivedModule;

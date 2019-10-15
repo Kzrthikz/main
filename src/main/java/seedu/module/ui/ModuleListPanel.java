@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.module.commons.core.LogsCenter;
 import seedu.module.model.module.Module;
+import seedu.module.model.module.ModuleTracked;
 
 /**
  * Panel containing the list of modules.
@@ -38,7 +39,7 @@ public class ModuleListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ModuleCard(trackedModule, getIndex() + 1).getRoot());
+                setGraphic(new ModuleCard((ModuleTracked) trackedModule, getIndex() + 1).getRoot());
             }
         }
     }

@@ -12,7 +12,6 @@ public class ArchivedModule implements Module {
     private final String moduleCode;
     private final String title;
     private final String description;
-    private final Deadline deadline;
 
     /**
      * Every field must be present and not null.
@@ -21,7 +20,6 @@ public class ArchivedModule implements Module {
         this.moduleCode = moduleCode;
         this.title = title;
         this.description = description;
-        this.deadline = new Deadline("");
     }
 
     public String getModuleCode() {
@@ -34,10 +32,6 @@ public class ArchivedModule implements Module {
 
     public String getDescription() {
         return description;
-    }
-
-    public Deadline getDeadline() {
-        return deadline;
     }
 
     /**
@@ -68,8 +62,7 @@ public class ArchivedModule implements Module {
 
         ArchivedModule otherModule = (ArchivedModule) other;
         return otherModule.getModuleCode().equals(getModuleCode()) && otherModule.getTitle().equals(getTitle())
-                && otherModule.getDescription().equals(getDescription())
-                && otherModule.getDeadline().equals(getDeadline());
+                && otherModule.getDescription().equals(getDescription());
     }
 
     @Override
