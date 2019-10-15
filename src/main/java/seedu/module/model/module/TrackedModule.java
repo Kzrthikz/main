@@ -16,7 +16,7 @@ public class TrackedModule implements Module {
      */
     public TrackedModule(ArchivedModule archivedModule) {
         this.archivedModule = archivedModule;
-        deadline = null;
+        this.deadline = new Deadline("");
     }
     public TrackedModule(ArchivedModule archivedModule, Deadline deadline) {
         this.archivedModule = archivedModule;
@@ -75,7 +75,7 @@ public class TrackedModule implements Module {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(archivedModule);
+        return Objects.hash(archivedModule, deadline);
     }
 
     @Override

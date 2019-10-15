@@ -2,9 +2,10 @@ package seedu.module.logic.commands;
 
 import java.util.List;
 
-import javax.sound.midi.Track;
-
 import seedu.module.commons.core.Messages;
+
+import static seedu.module.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.module.model.Model.PREDICATE_SHOW_ALL_MODULES;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
@@ -12,30 +13,33 @@ import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.Deadline;
 import seedu.module.model.module.TrackedModule;
 
+/**
+ * Adds deadline to be module.
+ */
 public class AddDeadlineCommand extends Command {
-    public static final String COMMAND_WORD = "add_deadline";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a deadline to a specific module in the ModuleBook. "
+    public static final String COMMAND_WORD = "deadline";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a deadline to a specific module. "
             + "Parameters: "
-            + "module code\n"
+            + "INDEX (must be a positive integer) "
+            + PREFIX_DEADLINE + "DESCRIPTION\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "d/ quiz submission /by 2/2/2019 2359";
+            +  PREFIX_DEADLINE + "quiz submission /by 2/2/2019 2359";
 
-    public static final String MESSAGE_SUCCESS = "New deadline added: %1$s";
-
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added deadline to Module: %1$s";
-    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
+    public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Added deadline to Module: %1$s";
+    public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed remark from Person: %1$s";
 
     private final Index index;
     private final Deadline deadline;
 
-    public AddDeadlineCommand(Index index,  Deadline deadline) {
+    public AddDeadlineCommand(Index index, Deadline deadline) {
         this.index = index;
         this.deadline = deadline;
     }
 
     @Override
-    public CommandResult execute(Model model) throws CommandException{
+    public CommandResult execute(Model model) throws CommandException {
         List<TrackedModule> lastShownList = model.getFilteredModuleList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -43,11 +47,12 @@ public class AddDeadlineCommand extends Command {
         }
 
         TrackedModule moduleToEdit = lastShownList.get(index.getZeroBased());
-        ArchivedModule am = new ArchivedModule(moduleToEdit.getModuleCode(), moduleToEdit.getTitle(), moduleToEdit.getDescription());
-        TrackedModule editedModule = new TrackedModule(am , deadline);
+        ArchivedModule archivedModule = new ArchivedModule(moduleToEdit.getModuleCode(),
+                moduleToEdit.getTitle(), moduleToEdit.getDescription());
+        TrackedModule editedModule = new TrackedModule(archivedModule , deadline);
 
         model.setModule(moduleToEdit, editedModule);
-        model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES;
+        model.updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);
 
         return new CommandResult(generateSuccessMessage(editedModule));
     }
@@ -57,16 +62,16 @@ public class AddDeadlineCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(TrackedModule moduleToEdit) {
-        String message = !deadline.value.isEmpty() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
+        String message = !deadline.value.isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;
         return String.format(message, moduleToEdit);
     }
 
     @Override
     public boolean equals(Object other) {
-        if(other == this) {
+        if (other == this) {
             return true;
         }
-        if(!(other instanceof AddDeadlineCommand)) {
+        if (!(other instanceof AddDeadlineCommand)) {
             return false;
         }
         AddDeadlineCommand e = (AddDeadlineCommand) other;

@@ -59,7 +59,7 @@ public class ModuleBook implements ReadOnlyModuleBook {
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
-    public void setModule(Model target, Model editedPerson) {
+    public void setModule(TrackedModule target, TrackedModule editedPerson) {
         requireNonNull(editedPerson);
 
         modules.setModule(target, editedPerson);

@@ -119,6 +119,6 @@ public interface Model {
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
-    void setPerson(Model target, Model editedPerson);
+    void setModule(TrackedModule target, TrackedModule editedPerson);
 }
 
