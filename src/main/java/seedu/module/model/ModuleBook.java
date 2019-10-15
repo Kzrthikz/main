@@ -55,14 +55,14 @@ public class ModuleBook implements ReadOnlyModuleBook {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Replaces the given module {@code target} in the list with {@code editedModule}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The person identity of {@code editedModule} must not be the same as another existing module in the address book.
      */
-    public void setModule(TrackedModule target, TrackedModule editedPerson) {
-        requireNonNull(editedPerson);
+    public void setModule(TrackedModule target, TrackedModule editedModule) {
+        requireNonNull(editedModule);
 
-        modules.setModule(target, editedPerson);
+        modules.setModule(target, editedModule);
     }
 
     /**

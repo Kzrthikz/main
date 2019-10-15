@@ -87,7 +87,7 @@ public class TrackedModule implements Module {
                 .append(" Description: ")
                 .append(getDescription())
                 .append(" Deadline: ")
-                .append(getDeadline());
+                .append(getDeadline().toString());
         return builder.toString();
     }
 

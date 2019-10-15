@@ -3,7 +3,7 @@ package seedu.module.model.module;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a Person's remark in the address book.
+ * Represents a Person's deadline in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Deadline {

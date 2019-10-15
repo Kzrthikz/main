@@ -78,9 +78,9 @@ public class UniqueModuleList implements Iterable<TrackedModule> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the module {@code target} in the list with {@code editedModule}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The module identity of {@code editedModule} must not be the same as another existing module in the list.
      */
     public void setModule(TrackedModule target, TrackedModule editedPerson) {
         requireAllNonNull(target, editedPerson);

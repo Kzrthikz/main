@@ -1,17 +1,18 @@
 package seedu.module.logic.commands;
 
+import static seedu.module.logic.parser.CliSyntax.PREFIX_DEADLINE;
+
 import java.util.List;
 
 import seedu.module.commons.core.Messages;
 
-import static seedu.module.logic.parser.CliSyntax.PREFIX_DEADLINE;
-import static seedu.module.model.Model.PREDICATE_SHOW_ALL_MODULES;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
 import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.Deadline;
 import seedu.module.model.module.TrackedModule;
+
 
 /**
  * Adds deadline to be module.
@@ -25,7 +26,7 @@ public class AddDeadlineCommand extends Command {
             + "INDEX (must be a positive integer) "
             + PREFIX_DEADLINE + "DESCRIPTION\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            +  PREFIX_DEADLINE + "quiz submission /by 2/2/2019 2359";
+            + PREFIX_DEADLINE + " quiz submission /by 2/2/2019 2359";
 
     public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Added deadline to Module: %1$s";
     public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed remark from Person: %1$s";
@@ -47,12 +48,14 @@ public class AddDeadlineCommand extends Command {
         }
 
         TrackedModule moduleToEdit = lastShownList.get(index.getZeroBased());
+
         ArchivedModule archivedModule = new ArchivedModule(moduleToEdit.getModuleCode(),
                 moduleToEdit.getTitle(), moduleToEdit.getDescription());
         TrackedModule editedModule = new TrackedModule(archivedModule , deadline);
 
         model.setModule(moduleToEdit, editedModule);
-        model.updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);
+        model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
+        model.displayTrackedList();
 
         return new CommandResult(generateSuccessMessage(editedModule));
     }

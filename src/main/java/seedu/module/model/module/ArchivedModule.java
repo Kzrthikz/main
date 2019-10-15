@@ -21,7 +21,7 @@ public class ArchivedModule implements Module {
         this.moduleCode = moduleCode;
         this.title = title;
         this.description = description;
-        this.deadline = new Deadline("");
+        this.deadline = new Deadline("deadline is empty");
     }
 
     public String getModuleCode() {

@@ -115,10 +115,10 @@ public interface Model {
     void displayTrackedList();
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given module {@code target} with {@code editedModule}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The person identity of {@code editedModule} must not be the same as another existing module in the address book.
      */
-    void setModule(TrackedModule target, TrackedModule editedPerson);
+    void setModule(TrackedModule target, TrackedModule editedModule);
 }
 
