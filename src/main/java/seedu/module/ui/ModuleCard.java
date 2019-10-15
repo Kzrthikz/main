@@ -46,7 +46,7 @@ public class ModuleCard extends UiPart<Region> {
         deadline.setText(module.getDeadline().value);
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object other) {
         // short circuit if same object
         if (other == this) {
@@ -62,5 +62,5 @@ public class ModuleCard extends UiPart<Region> {
         ModuleCard card = (ModuleCard) other;
         return id.getText().equals(card.id.getText())
                 && module.equals(card.module);
-    }
+    }*/
 }

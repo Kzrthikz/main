@@ -21,7 +21,7 @@ public class ArchivedModule implements Module {
         this.moduleCode = moduleCode;
         this.title = title;
         this.description = description;
-        this.deadline = new Deadline("deadline is empty");
+        this.deadline = new Deadline("");
     }
 
     public String getModuleCode() {
@@ -68,7 +68,8 @@ public class ArchivedModule implements Module {
 
         ArchivedModule otherModule = (ArchivedModule) other;
         return otherModule.getModuleCode().equals(getModuleCode()) && otherModule.getTitle().equals(getTitle())
-                && otherModule.getDescription().equals(getDescription());
+                && otherModule.getDescription().equals(getDescription())
+                && otherModule.getDeadline().equals(getDeadline());
     }
 
     @Override
