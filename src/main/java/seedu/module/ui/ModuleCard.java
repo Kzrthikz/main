@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.module.model.module.Module;
 import seedu.module.model.module.Trackable;
 
 /**
@@ -21,7 +22,7 @@ public class ModuleCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Trackable module;
+    public final Module module;
 
     @FXML
     private HBox cardPane;
@@ -36,14 +37,16 @@ public class ModuleCard extends UiPart<Region> {
     @FXML
     private Label deadline;
 
-    public ModuleCard(Trackable module, int displayedIndex) {
+    public ModuleCard(Module module, int displayedIndex) {
         super(FXML);
         this.module = module;
         id.setText(displayedIndex + ". ");
         moduleCode.setText(module.getModuleCode());
         title.setText(module.getTitle());
         description.setText(module.getDescription());
-        deadline.setText(module.getDeadline().getValue());
+        if (module instanceof Trackable) {
+            deadline.setText(((Trackable) module).getDeadline().getValue());
+        }
     }
 
     @Override
