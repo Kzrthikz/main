@@ -2,8 +2,6 @@ package seedu.module;
 
 import javafx.application.Application;
 
-
-
 /**
  * The main entry point to the application.
  * <p>
