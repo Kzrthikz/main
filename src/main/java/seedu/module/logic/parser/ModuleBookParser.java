@@ -7,6 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.module.logic.commands.AddCommand;
+import seedu.module.logic.commands.AddDeadlineCommand;
+import seedu.module.logic.commands.BackCommand;
 import seedu.module.logic.commands.Command;
 import seedu.module.logic.commands.DeleteCommand;
 import seedu.module.logic.commands.ExitCommand;
@@ -14,6 +16,7 @@ import seedu.module.logic.commands.FindCommand;
 import seedu.module.logic.commands.HelpCommand;
 import seedu.module.logic.commands.ListCommand;
 import seedu.module.logic.commands.deadlineCommands.DeadlineCommand;
+import seedu.module.logic.commands.ViewCommand;
 import seedu.module.logic.parser.exceptions.ParseException;
 
 /**
@@ -54,6 +57,12 @@ public class ModuleBookParser {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
+
+        case ViewCommand.COMMAND_WORD:
+            return new ViewCommandParser().parse(arguments);
+
+        case BackCommand.COMMAND_WORD:
+            return new BackCommand();
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();

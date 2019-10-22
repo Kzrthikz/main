@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.module.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -24,9 +25,10 @@ public class ModelManager implements Model {
 
     private final ModuleBook moduleBook;
     private final UserPrefs userPrefs;
-    private final FilteredList<TrackedModule> filteredTrackedModules;
-    private final FilteredList<ArchivedModule> filteredArchivedModules;
+    private FilteredList<TrackedModule> filteredTrackedModules;
+    private FilteredList<ArchivedModule> filteredArchivedModules;
     private ObservableList<Module> displayedList = FXCollections.observableArrayList();
+    private Optional<Module> displayedModule = Optional.empty();
 
     /**
      * Initializes a ModelManager with the given moduleBook and userPrefs.
@@ -88,6 +90,18 @@ public class ModelManager implements Model {
     @Override
     public void setModuleBook(ReadOnlyModuleBook moduleBook) {
         this.moduleBook.resetData(moduleBook);
+        filteredTrackedModules = new FilteredList<>(this.moduleBook.getModuleList());
+        filteredArchivedModules = new FilteredList<>(this.moduleBook.getArchivedModuleList());
+    }
+
+    /**
+     * Replaces the given module {@code target} in the list with {@code editedModule}.
+     * {@code target} must exist in the module book.
+     * The module identity of {@code editedModule} must not be the same as another existing module in the module book.
+     */
+    public void setModule(TrackedModule target, TrackedModule editedModule) {
+        requireNonNull(editedModule);
+        moduleBook.setModule(target, editedModule);
     }
 
     /**
@@ -182,6 +196,18 @@ public class ModelManager implements Model {
         }
     }
 
+    //=========== Displayed List Accessors =============================================================
+
+    @Override
+    public Optional<Module> getDisplayedModule() {
+        return displayedModule;
+    }
+
+    @Override
+    public void setDisplayedModule(Module toDisplay) {
+        this.displayedModule = Optional.ofNullable(toDisplay);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -199,7 +225,8 @@ public class ModelManager implements Model {
         return moduleBook.equals(other.moduleBook)
                 && userPrefs.equals(other.userPrefs)
                 && filteredTrackedModules.equals(other.filteredTrackedModules)
-                && filteredArchivedModules.equals(other.filteredArchivedModules);
+                && filteredArchivedModules.equals(other.filteredArchivedModules)
+                && displayedModule.equals(other.displayedModule);
     }
 
 }
