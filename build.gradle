@@ -43,7 +43,7 @@ test {
 
 dependencies {
     String jUnitVersion = '5.4.0'
-    String javaFxVersion = '11'
+    String javaFxVersion = '11.0.1'
 
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
@@ -95,6 +95,14 @@ coveralls {
 tasks.coveralls {
     dependsOn coverage
     onlyIf { System.env.'CI' }
+}
+
+task extrachecks(type: Exec) {
+    commandLine 'bash', './config/travis/run-checks.sh'
+}
+
+tasks.check {
+    dependsOn extrachecks
 }
 
 test {
