@@ -7,7 +7,6 @@ import static java.util.Objects.requireNonNull;
  * Guarantees: immutable; is always valid
  */
 public class Deadline {
-  
     public static final String MESSAGE_CONSTRAINTS = "Not a valid Deadline";
 
     private String description;

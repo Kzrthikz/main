@@ -12,7 +12,6 @@ import seedu.module.model.module.Deadline;
 /**
  * Parses input arguments and creates a new AddDeadlineCommand object.
  */
-branch-deadline
 public class AddDeadlineCommandParser {
 
     /**

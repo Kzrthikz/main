@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.module.logic.commands.AddCommand;
-import seedu.module.logic.commands.AddDeadlineCommand;
 import seedu.module.logic.commands.BackCommand;
 import seedu.module.logic.commands.Command;
 import seedu.module.logic.commands.DeleteCommand;
@@ -15,8 +14,8 @@ import seedu.module.logic.commands.ExitCommand;
 import seedu.module.logic.commands.FindCommand;
 import seedu.module.logic.commands.HelpCommand;
 import seedu.module.logic.commands.ListCommand;
-import seedu.module.logic.commands.deadlineCommands.DeadlineCommand;
 import seedu.module.logic.commands.ViewCommand;
+import seedu.module.logic.commands.deadlineCommands.DeadlineCommand;
 import seedu.module.logic.parser.exceptions.ParseException;
 
 /**
