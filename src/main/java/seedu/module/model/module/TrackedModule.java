@@ -11,7 +11,6 @@ public class TrackedModule implements Module, Trackable {
 
     // Identity field
     private final ArchivedModule archivedModule;
-    //private Deadline deadline;
     private List<Deadline> deadlineList = new ArrayList<>();
 
     /**

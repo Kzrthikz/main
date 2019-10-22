@@ -62,12 +62,6 @@ class JsonAdaptedModule {
             throw new IllegalValueException(String.format("Archived Module %s not found", moduleCode));
         }
 
-        /*if (deadline == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Deadline.class.getSimpleName()));
-        }
-        final Deadline modelDeadline = new Deadline(deadline);*/
-
         TrackedModule result = new TrackedModule(archivedModule.get());
         for (JsonAdaptedDeadline deadline : deadlines) {
             result.getDeadlineList().add(deadline.toModelType());
