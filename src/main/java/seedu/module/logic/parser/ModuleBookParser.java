@@ -13,7 +13,7 @@ import seedu.module.logic.commands.ExitCommand;
 import seedu.module.logic.commands.FindCommand;
 import seedu.module.logic.commands.HelpCommand;
 import seedu.module.logic.commands.ListCommand;
-import seedu.module.logic.commands.deadlineCommands.AddDeadlineCommand;
+import seedu.module.logic.commands.deadlineCommands.DeadlineCommand;
 import seedu.module.logic.parser.exceptions.ParseException;
 
 /**
@@ -43,7 +43,7 @@ public class ModuleBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
-        case AddDeadlineCommand.COMMAND_WORD:
+        case DeadlineCommand.COMMAND_WORD:
             return new DeadlineCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:

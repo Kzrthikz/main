@@ -28,7 +28,7 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_DESCRIPTION, PREFIX_TIME);
         try {
             if (!argMultimap.getValue(PREFIX_ACTION).isPresent()) {
-                throw new ParseException("Input format error. a/ACTION now found");
+                throw new ParseException("Input format error. a/ACTION not found");
             }
             if (argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {
                 return new AddDeadlineCommandParser().parse(argMultimap);
