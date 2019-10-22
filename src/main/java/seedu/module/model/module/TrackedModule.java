@@ -18,6 +18,11 @@ public class TrackedModule implements Module, Trackable {
      */
     public TrackedModule(ArchivedModule archivedModule) {
         this.archivedModule = archivedModule;
+        this.deadline = new Deadline("");
+    }
+    public TrackedModule(ArchivedModule archivedModule, Deadline deadline) {
+        this.archivedModule = archivedModule;
+        this.deadline = deadline;
     }
 
     public String getModuleCode() {
