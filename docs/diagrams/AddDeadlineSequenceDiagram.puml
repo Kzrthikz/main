@@ -1,0 +1,89 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":ModuleBookParser" as ModuleBookParser LOGIC_COLOR
+participant ":DeadlineCommandParser" as DeadlineCommandParser LOGIC_COLOR
+participant ":AddDeadlineCommandParser" as AddDeadlineCommandParser LOGIC_COLOR
+participant "a:AddDeadlineCommand" as AddDeadlineCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("deadline 2 a/add d/hw t/2/2/2019 1900")
+activate LogicManager
+
+LogicManager -> ModuleBookParser : parseCommand("deadline 2 a/add d/hw t/2/2/2019 1900")
+activate ModuleBookParser
+
+create DeadlineCommandParser
+ModuleBookParser -> DeadlineCommandParser
+activate DeadlineCommandParser
+
+DeadlineCommandParser --> ModuleBookParser
+deactivate DeadlineCommandParser
+
+ModuleBookParser -> DeadlineCommandParser : parse("deadline 2 a/add d/hw t/2/2/2019 1900", "a/", "d/", "t/")
+activate DeadlineCommandParser
+
+create AddDeadlineCommandParser
+DeadlineCommandParser -> AddDeadlineCommandParser
+activate AddDeadlineCommandParser
+
+create AddDeadlineCommand
+AddDeadlineCommandParser -> AddDeadlineCommand
+activate AddDeadlineCommand
+
+AddDeadlineCommand --> AddDeadlineCommandParser : a
+deactivate AddDeadlineCommand
+
+AddDeadlineCommandParser --> DeadlineCommandParser : a
+deactivate AddDeadlineCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AddDeadlineCommandParser -[hidden]-> ModuleBookParser
+destroy AddDeadlineCommandParser
+
+DeadlineCommandParser --> ModuleBookParser : a
+deactivate DeadlineCommandParser
+
+ModuleBookParser --> LogicManager : a
+deactivate ModuleBookParser
+
+LogicManager -> AddDeadlineCommand : execute()
+activate AddDeadlineCommand
+
+AddDeadlineCommand -> Model : updateFilteredModuleList(pred)
+activate Model
+
+Model --> AddDeadlineCommand
+deactivate Model
+
+AddDeadlineCommand -> Model : addDeadline(Deadline)
+activate Model
+
+Model --> AddDeadlineCommand
+deactivate Model
+
+AddDeadlineCommand -> Model : displayTrackedList()
+activate Model
+
+Model --> AddDeadlineCommand
+deactivate Model
+
+create CommandResult
+AddDeadlineCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AddDeadlineCommand
+deactivate CommandResult
+
+AddDeadlineCommand --> LogicManager : result
+deactivate AddDeadlineCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
