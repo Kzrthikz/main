@@ -9,6 +9,9 @@ participant "a:AddDeadlineCommand" as AddDeadlineCommand LOGIC_COLOR
 participant ":CommandResult" as CommandResult LOGIC_COLOR
 end box
 
+skinparam ParticipantFontSize 16
+skinparam defaultFontSize 16
+
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
