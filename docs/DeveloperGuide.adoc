@@ -288,7 +288,9 @@ Given below is an example usage scenario of how add deadline mechanism behaves a
 
 Step 1. The user executes:
 
+....
 deadline 2 a/add d/do homework t/2/12/2019 1645
+....
 
 Step 2. `LogicManager` would use `ModuleBookParser#parseCommand()` to parse input from the user.
 
@@ -306,7 +308,7 @@ Step 6. `LogicManager` would execute `AddDeadlineCommand#execute()`,
 checks whether there is an existing module,
 then adds the `TrackedModule` into the `Model` which is handled by the `ModelManager`.
 
-Step 7. `AddClaimCommand` would return a `CommandResult`
+Step 7. `AddDeadlineCommand` would return a `CommandResult`
 to the `LogicManager` which would then be returned back to the user.
 
 The following sequence diagram shows how the add deadline operation works:
