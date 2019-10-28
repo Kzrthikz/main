@@ -11,7 +11,8 @@ public class TrackedModule implements Module, Trackable {
 
     // Identity field
     private final ArchivedModule archivedModule;
-    private List<Deadline> deadlineList = new ArrayList<>();
+    private DeadlineList deadlineList = new DeadlineList();
+    private List<Link> links = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
@@ -33,20 +34,19 @@ public class TrackedModule implements Module, Trackable {
     }
 
     public String getDeadline() {
-        String deadlineString = "Deadline: \n";
-        for (int i = 0; i < deadlineList.size(); i++) {
-            deadlineString += ((i + 1) + ". " + deadlineList.get(i).getDescription()
-                    + ", " + deadlineList.get(i).getTime()) + "\n";
-        }
-        return deadlineString;
+        return deadlineList.toString();
     }
 
     public List<Deadline> getDeadlineList() {
-        return deadlineList;
+        return deadlineList.getDeadlineList();
     }
 
     public void addDeadline(Deadline deadline) {
-        this.deadlineList.add(deadline);
+        this.deadlineList.addDeadline(deadline);
+    }
+
+    public List<Link> getLink() {
+        return links;
     }
 
     /**
@@ -60,6 +60,28 @@ public class TrackedModule implements Module, Trackable {
 
         return otherTrackedModule != null
                 && otherTrackedModule.getModuleCode().equals(getModuleCode());
+    }
+
+    /**
+     * Adds a link to the List of links in this module.
+     * @param link link to add
+     */
+    public void addLink(Link link) {
+        this.links.add(link);
+    }
+
+    /**
+     * Returns true if there exists a link with the same title
+     * @param link
+     * @return
+     */
+    public boolean hasLinkTitle(Link link) {
+        for (Link l: links) {
+            if (link.name.equals(l.name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

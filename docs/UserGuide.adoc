@@ -35,10 +35,10 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all modules
+* *`list`* : lists all modules.
 * **`add`**`cs2103t` : adds a module with module code `cs2103t` to be tracked by ModuleBook.
-* **`delete`**`cs2103t` : deletes module with code `cs2103t`
-* **`deadline`**`1`**`d/`**`complete homework` : adds deadline to module
+* **`delete`**`1` : deletes module at index 1.
+* **`deadline`**`cs2103t`**`d/complete UG and DG`**`t/time` : adds deadline to module with code 'cs2103t'
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -50,50 +50,214 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add MODULE_CODE`, `MODULE_CODE` is a parameter which can be used as `add CS1101S`.
-* Items in square brackets are optional e.g `MODULE_CODE [MODULE_TITLE]` can be used as `CS1231 discrete structures`
+* Items in square brackets are optional e.g `MODULE_CODE [MODULE_TITLE]` can be used as `CS1231 discrete structures`.
 //* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 //* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help: `help`
 
 Format: `help`
 
-=== Adding a module: `add`
+=== Finding a module: `find`
 
-Adds a module to be tracked +
-Format: `add MODULE_CODE`
+Find modules with the the given keyword. +
+Format: `find MODULE_CODE`
+
+****
+* The search is case insensitive. e.g `cs2103t` will match `CS2103T`.
+* Only module code is searched.
+* Only full words will be matched e.g. `cs2103` will not match `cs2103t`.
+****
 
 [TIP]
-Modules are imported from Nusmods database
+Modules are imported from NUSMods database.
+
+
+Examples:
+
+* `find cs2103t`
+
+=== Adding a module: `add`
+
+Adds a module to be tracked. +
+Format: `add MODULE_CODE`
+****
+* The add is case insensitive. e.g `cs2103t` will match `CS2103T`.
+* Only module code is searched for module to be added.
+* Only full words will be matched e.g. `cs2103` will not match `cs2103t`.
+****
+[TIP]
+Modules are imported from NUSMods database.
 
 
 Examples:
 
 * `add cs2103t`
-* `add manual MODULE_CODE (not in database)`
 
-=== View the module: `view`
+=== Viewing a module: `view`
 
-View a tracked module and enters module viewing mode. In module viewing, a different set of commands are available [see <<Module-View>>].
+Views a module and enters the module view. Can be a tracked module or an archived module.
 
-Format: `view MODULE_CODE`
+Format: `view <MODULE_CODE>`
 
 Example: `view cs1231`
 
-=== Add deadline to the module: `deadline`
+=== Return from module view: `back`
+Returns from the module view.
 
-Adds deadline to tracked module
+Format: `back`
 
-Format: `deadline MODULE_LIST_NUMBER d/ deadline description`
+=== Manage deadline tasks: `deadline`
 
-Example: `deadline 1 d/ finish homework`
+==== `add`
+
+Format: `deadline MODULE_CODE a/add d/DESCRIPTION t/TIME`
+
+Adds deadline task consisting of description and time to the respective module.
+If deadline list is empty, creates a list. Else, adds to the end of the list.
+
+Example: `deadline cs2103t a/add d/finish Ug and Dg t/22/10/2019 2359`
+
+==== `edit`
+
+===== 3.4.2.1. Edit Description
+
+Format: `deadline MODULE_CODE a/edit l/TASK_NUMBER_IN_LIST d/NEW_DESCRIPTION`
+
+Edits description from the deadline task numbered in deadline list for the respective module.
+
+Example: `deadline cs2103t a/edit l/2 d/finish increments`
+
+===== 3.4.2.2. Edit Time
+
+Format: `deadline MODULE_CODE a/edit l/TASK_NUMBER_IN_LIST t/NEW_TIME`
+
+Edits time from the deadline task numbered in deadline list for the respective module.
+
+Example: `deadline cs2103t a/edit l/2 t/29/10/2018 2359`
+
+==== `done`
+
+Format: `deadline MODULE_CODE a/done l/TASK_NUMBER_IN_LIST`
+
+Marks the deadline task numbered in deadline list
+as *done* with a tick on the checkbox for the respective module.
+
+Example: `deadline cs2103t a/done l/2`
+
+==== `in Progress`
+
+Format: `deadline MODULE_CODE a/inProgress l/TASK_NUMBER_IN_LIST`
+
+Marks the deadline task numbered in deadline list
+as *in-progress* with a dash on the checkbox for the respective module.
+
+Example: `deadline cs2103t a/inProgress l/2`
+
+==== `priority`
+
+===== 3.4.5.1. High Priority
+
+Format: `deadline MODULE_CODE a/highPriority l/TASK_NUMBER_IN_LIST`
+
+Tags the deadline task numbered in deadline list
+as *High-Priority* for the respective module.
+
+Example: `deadline cs2103t a/highPriority l/2`
+
+===== 3.4.5.2. Medium Priority
+
+Format: `deadline MODULE_CODE a/mediumPriority l/TASK_NUMBER_IN_LIST`
+
+Tags deadline task numbered in deadline list
+as *Medium-Priority* for the respective module.
+
+Example: `deadline cs2103t a/mediumPriority l/2`
+
+===== 3.4.5.3. Low Priority
+
+Format: `deadline MODULE_CODE a/lowPriority l/TASK_NUMBER_IN_LIST`
+
+Tags deadline task numbered in deadline list
+as *Low-Priority* for the respective module.
+
+Example: `deadline cs2103t a/lowPriority l/2`
+
+==== `sort`
+
+===== 3.4.6.3. Sort by Time
+
+Format: `deadline MODULE_CODE a/sort by/time`
+
+Sorts deadline tasks according to time, latest deadline at the top and later ones below.
+
+Example: `deadline cs2103t a/sort by/time`
+
+===== 3.4.6.3. Sort by Priority
+
+Format: `deadline MODULE_CODE a/sort by/priority`
+
+Sorts deadline tasks according to priority, highest priority at the top, followed
+by medium priority and lastly low priority at the bottom.
+
+Example: `deadline cs2103t a/sort by/priority`
+
+==== `delete`
+
+===== 3.4.7.1 Delete entire list
+
+Format: `deadline MODULE_CODE a/deleteList`
+
+Deletes deadline list for the respective module.
+
+Example: `deadline cs2103t a/deleteList`
+
+===== 3.4.7.1 Delete specific deadline task from list
+
+Format: `deadline MODULE_CODE a/delete l/TASK_NUMBER_IN_LIST`
+
+Deletes deadline task numbered from the respective module.
+
+Example: `deadline cs2103t a/delete l/2`
+
+=== Manage links in modules: `link`
+
+==== `add`
+
+Format: `link MODULE_CODE a/add t/LINK_TITLE l/LINK_URL`
+
+Adds link provided to the respective module.
+
+Example: `link cs1231 a/add t/course website l/https://www.comp.nus.edu.sg/~cs1231/`
+
+==== `edit`
+
+Format: `link MODULE_CODE a/edit t/LINK_TITLE [nt/EDITED_TITLE nl/EDITED_LINK]`
+
+Edits the link identified by its current title for the respective module.
+
+Example: `link cs1231 a/edit t/course website nt/module website`
+
+==== `go`
+
+Format: `link MODULE_CODE a/go t/LINK_TITLE`
+
+Launches the link in the user system's default browser.
+
+Example: `link cs1231 a/go t/module website`
+
+==== `delete`
+
+Format: `link MODULE_CODE a/delete t/LINK_TITLE`
+
+Deletes the link with the given link title in the respective module.
+
+Example: `link cs1231 a/delete t/module website`
 
 === Listing all modules : `list`
-
 Shows a list of all current tracked modules. +
 Format: `list`
-
 
 ////
 === Editing a person : `edit`
@@ -116,58 +280,16 @@ Edits the phone number and email address of the 1st module to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd module to be `Betsy Crower` and clears all existing tags.
 
-=== Locating modules by name: `find`
-
-Finds modules whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `computing` will match `Computing`
-* The order of the keywords does not matter. e.g. `software engineering` will match `engineering software`
-* Only module code and module title are searched.
-* Only full words will be matched e.g. `computer` will not match `computers`
-//* Modules matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find computer` +
-Returns `cs2100` and `cs2105`
-* `find Betsy Tim John`?? +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-// tag::delete[]
 === Deleting a module : `delete`
 
-Untrack the specified module from ModuleBook. +
-Format: `delete MODULE_CODE`
-
-****
-* Deletes module associated with specified `MODULE_CODE`.
-****
+Deletes a module from the tracked list. +
+Format: `delete MODULE_INDEX`
 
 Examples:
 
-* `delete cs2100` +
-  Removes module CS2100 from tracked module list.
-
+* `delete 1`
 ////
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-////
-
-// end::delete[]
-
-////
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-////
-
-
-=== Exiting the program : `exit`
+=== Exiting the program: `exit`
 
 Exits the program. +
 Format: `exit`
@@ -187,6 +309,23 @@ Multiple users can use the same application on the same computer.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
+
+== Glossary
+
+=== Common Application terms
+
+**Home view** - The state of the application that displays the home page in the main panel.
+
+**Module view** - The state of the application that displays the specified module in the main panel.
+
+=== Common Module terms
+
+**Archived** - A module that the institution provides. Can be viewed and tracked.
+
+**Tracked** - A module that is tracked. References an archived module. Can be viewed.
+
+
+
 ////
 
 
@@ -229,10 +368,10 @@ Exits module-view and return to module list
 === List View
 * *Add* `add MODULE_CODE` +
 e.g. `add cs2101`
-* *Delete* : `delete MODULE_CODE` +
-e.g. `delete cs1231`
+* *Delete* : `delete MODULE_INDEX` +
+e.g. `delete 1`
 * *Exit* : `exit`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find MODULE_CODE` +
 e.g. `find cs2101`
 * *Help* : `help`
 * *List* : `list`

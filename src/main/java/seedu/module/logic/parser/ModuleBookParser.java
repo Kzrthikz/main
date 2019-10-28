@@ -9,13 +9,14 @@ import java.util.regex.Pattern;
 import seedu.module.logic.commands.AddCommand;
 import seedu.module.logic.commands.BackCommand;
 import seedu.module.logic.commands.Command;
+import seedu.module.logic.commands.DeadlineCommand;
 import seedu.module.logic.commands.DeleteCommand;
 import seedu.module.logic.commands.ExitCommand;
 import seedu.module.logic.commands.FindCommand;
 import seedu.module.logic.commands.HelpCommand;
 import seedu.module.logic.commands.ListCommand;
 import seedu.module.logic.commands.ViewCommand;
-import seedu.module.logic.commands.deadlineCommands.DeadlineCommand;
+import seedu.module.logic.commands.linkcommands.LinkCommand;
 import seedu.module.logic.parser.exceptions.ParseException;
 
 /**
@@ -71,6 +72,9 @@ public class ModuleBookParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case LinkCommand.COMMAND_WORD:
+            return new LinkCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

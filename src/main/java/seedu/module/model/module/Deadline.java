@@ -11,6 +11,7 @@ public class Deadline {
 
     private String description;
     private String time;
+    private int deadlineListNum = 0;
 
     public Deadline(String description, String time) {
         requireNonNull(description);
@@ -28,6 +29,14 @@ public class Deadline {
 
     public void setValue(String newValue) {
         this.description = newValue;
+    }
+
+    public void editDescription(String newDescription) {
+        this.description = newDescription;
+    }
+
+    public void editTime(String newTime) {
+        this.time = newTime;
     }
 
     @Override
