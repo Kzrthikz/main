@@ -44,6 +44,14 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
                 ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
                         PREFIX_TASK_LIST_NUMBER);
                 return new DeleteDeadlineCommandParser().parse(newArgMultimap);
+            } else if (argMultimap.getValue(PREFIX_ACTION).get().equals("done")) {
+                ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
+                        PREFIX_TASK_LIST_NUMBER);
+                return new DoneDeadlineCommandParser().parse(newArgMultimap);
+            } else if (argMultimap.getValue(PREFIX_ACTION).get().equals("inProgress")) {
+                ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
+                        PREFIX_TASK_LIST_NUMBER);
+                return new InProgressDeadlineCommandParser().parse(newArgMultimap);
             } else {
                 throw new ParseException("Command not recognised");
             }

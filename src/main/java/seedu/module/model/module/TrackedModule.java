@@ -45,6 +45,14 @@ public class TrackedModule implements Module, Trackable {
         this.deadlineList.addDeadline(deadline);
     }
 
+    public void markDeadlineTaskAsDone(int taskListNum) {
+        deadlineList.markDeadlineTaskAsDone(taskListNum);
+    }
+
+    public void markDeadlineTaskAsInProgress(int taskListNum) {
+        deadlineList.markDeadlineTaskAsInProgress(taskListNum);
+    }
+
     public void deleteDeadlineTask(int taskListNum) {
         deadlineList.deleteDeadlineTask(taskListNum);
     }

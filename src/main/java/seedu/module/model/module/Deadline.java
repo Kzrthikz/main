@@ -11,12 +11,40 @@ public class Deadline {
 
     private String description;
     private String time;
+    private boolean isDone;
+    private boolean isInProgress;
     private int deadlineListNum = 0;
 
     public Deadline(String description, String time) {
         requireNonNull(description);
         this.description = description;
         this.time = time;
+    }
+
+    /**
+     * Marks the deadline task as done.
+     */
+    public void markAsDone() {
+        isDone = true;
+        isInProgress = false;
+    }
+
+    /**
+     * Marks the deadline task as in progress.
+     */
+    public void markAsInProgress() {
+        isInProgress = true;
+        isDone = false;
+    }
+
+    public String getStatus() {
+        if (isDone) {
+            return "" + "\u2713";
+        } else if (isInProgress) {
+            return "-";
+        } else {
+            return " ";
+        }
     }
 
     public String getDescription() {
@@ -41,7 +69,7 @@ public class Deadline {
 
     @Override
     public String toString() {
-        return description + " ," + time;
+        return "[" + getStatus() + "] " + description + " ," + time;
     }
 
     @Override

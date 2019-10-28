@@ -9,25 +9,26 @@ import seedu.module.model.Model;
 import seedu.module.model.module.TrackedModule;
 
 /**
- * Deletes a specified deadline task from a module's deadline list.
+ * Marks a specified deadline task from a module's deadline list as 'Done' with a tick.
  */
-public class DeleteDeadlineTaskCommand extends DeadlineCommand {
-    public static final String COMMAND_WORD = "delete";
+public class DoneDeadlineCommand extends DeadlineCommand {
 
-    public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Deleted deadline from module: %1$s";
-    public static final String MESSAGE_DELETE_DEADLINE_FAIL = "Unable to delete deadline from module: %1$s";
+    public static final String COMMAND_WORD = "done";
+
+    public static final String MESSAGE_DONE_DEADLINE_SUCCESS = "Mark deadline as Done for module: %1$s";
+    public static final String MESSAGE_DONE_DEADLINE_FAIL = "Unable to mark deadline as Done from module: %1$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes entire Deadline list identified by the index number used in the displayed Module list.\n"
+            + ": Marks the deadline task identified by the index number as done.\n"
             + "Parameters: INDEX (must be a positive integer), \n"
             + "TASK(must be a positive integer) \n"
             + "Example: deadline 2 a/" + COMMAND_WORD + " task/2";
 
     private Index index;
     private int taskListNum;
-    private TrackedModule moduleToDeleteDeadline;
+    private TrackedModule moduleToMarkDeadline;
 
-    public DeleteDeadlineTaskCommand(Index index, int taskListNum) {
+    public DoneDeadlineCommand(Index index, int taskListNum) {
         this.index = index;
         this.taskListNum = taskListNum;
     }
@@ -40,13 +41,13 @@ public class DeleteDeadlineTaskCommand extends DeadlineCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);
         }
 
-        moduleToDeleteDeadline = lastShownList.get(index.getZeroBased());
-        moduleToDeleteDeadline.deleteDeadlineTask(taskListNum - 1);
+        moduleToMarkDeadline = lastShownList.get(index.getZeroBased());
+        moduleToMarkDeadline.markDeadlineTaskAsDone(taskListNum - 1);
 
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
         model.displayTrackedList();
 
-        return new CommandResult(generateSuccessMessage(moduleToDeleteDeadline));
+        return new CommandResult(generateSuccessMessage(moduleToMarkDeadline));
     }
 
     /**
@@ -54,7 +55,7 @@ public class DeleteDeadlineTaskCommand extends DeadlineCommand {
      * {@code moduleToEdit}.
      */
     private String generateSuccessMessage(TrackedModule moduleToAddDeadline) {
-        String message = MESSAGE_DELETE_DEADLINE_SUCCESS;
+        String message = MESSAGE_DONE_DEADLINE_SUCCESS;
         return String.format(message, moduleToAddDeadline);
     }
 }

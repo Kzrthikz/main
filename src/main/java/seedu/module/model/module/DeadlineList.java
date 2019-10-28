@@ -26,17 +26,18 @@ public class DeadlineList {
     }
 
     /**
-     * Deletes the entire deadline list.
-     */
-    public void deleteDeadlineList() {
-        this.deadlineList.clear();
-    }
-
-    /**
      * Deletes the specified deadline task from list.
      */
     public void deleteDeadlineTask(int taskListNum) {
         this.deadlineList.remove(taskListNum);
+    }
+
+    public void markDeadlineTaskAsDone(int taskListNum) {
+        deadlineList.get(taskListNum).markAsDone();
+    }
+
+    public void markDeadlineTaskAsInProgress(int taskListNum) {
+        deadlineList.get(taskListNum).markAsInProgress();
     }
 
     /**
@@ -46,8 +47,7 @@ public class DeadlineList {
     public String toString() {
         String deadlineString = "Deadline: \n";
         for (int i = 0; i < deadlineList.size(); i++) {
-            deadlineString += ((i + 1) + ". " + deadlineList.get(i).getDescription()
-                    + ", " + deadlineList.get(i).getTime()) + "\n";
+            deadlineString += ((i + 1) + ". " + deadlineList.get(i)) + "\n";
         }
         return deadlineString;
     }

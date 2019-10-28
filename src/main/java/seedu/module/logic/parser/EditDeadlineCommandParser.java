@@ -36,7 +36,6 @@ public class EditDeadlineCommandParser {
         } else {
             throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
-
     }
 }
 
