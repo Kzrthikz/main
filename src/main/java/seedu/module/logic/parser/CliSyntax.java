@@ -11,5 +11,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_TIME = new Prefix("t/");
     public static final Prefix PREFIX_LINK = new Prefix("l/");
     public static final Prefix PREFIX_NAME = new Prefix("n/");
-    public static final Prefix PREFIX_TASK_LIST_NUMBER = new Prefix("num/");
+    public static final Prefix PREFIX_TASK_LIST_NUMBER = new Prefix("task/");
 }

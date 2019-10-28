@@ -18,11 +18,25 @@ public class DeadlineList {
     }
 
     /**
-     * returns the deadline list.
+     * Returns the deadline list.
      * @return deadline list.
      */
     public List<Deadline> getDeadlineList() {
         return deadlineList;
+    }
+
+    /**
+     * Deletes the entire deadline list.
+     */
+    public void deleteDeadlineList() {
+        this.deadlineList.clear();
+    }
+
+    /**
+     * Deletes the specified deadline task from list.
+     */
+    public void deleteDeadlineTask(int taskListNum) {
+        this.deadlineList.remove(taskListNum);
     }
 
     /**

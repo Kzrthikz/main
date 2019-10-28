@@ -45,6 +45,10 @@ public class TrackedModule implements Module, Trackable {
         this.deadlineList.addDeadline(deadline);
     }
 
+    public void deleteDeadlineTask(int taskListNum) {
+        deadlineList.deleteDeadlineTask(taskListNum);
+    }
+
     public List<Link> getLink() {
         return links;
     }
