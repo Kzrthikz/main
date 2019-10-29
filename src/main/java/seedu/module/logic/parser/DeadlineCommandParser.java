@@ -3,6 +3,7 @@ package seedu.module.logic.parser;
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_ACTION;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_LIST_NUMBER;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TIME;
 
@@ -52,6 +53,10 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
                 ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
                         PREFIX_TASK_LIST_NUMBER);
                 return new InProgressDeadlineCommandParser().parse(newArgMultimap);
+            } else if (argMultimap.getValue(PREFIX_ACTION).get().equals("priority")) {
+                ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
+                        PREFIX_TAG, PREFIX_TASK_LIST_NUMBER);
+                return new PriorityDeadlineCommandParser().parse(newArgMultimap);
             } else {
                 throw new ParseException("Command not recognised");
             }
