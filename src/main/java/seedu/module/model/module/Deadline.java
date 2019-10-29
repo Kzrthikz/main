@@ -13,12 +13,14 @@ public class Deadline {
     private String time;
     private boolean isDone;
     private boolean isInProgress;
+    private String tag;
     private int deadlineListNum = 0;
 
-    public Deadline(String description, String time) {
+    public Deadline(String description, String time, String tag) {
         requireNonNull(description);
         this.description = description;
         this.time = time;
+        this.tag = tag;
     }
 
     /**
@@ -55,6 +57,10 @@ public class Deadline {
         return time;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
     public void setValue(String newValue) {
         this.description = newValue;
     }
@@ -69,7 +75,7 @@ public class Deadline {
 
     @Override
     public String toString() {
-        return "[" + getStatus() + "] " + description + " ," + time;
+        return "[" + getStatus() + "] " + description + " ," + time + " PRIORITY: " + tag;
     }
 
     @Override

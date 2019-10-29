@@ -1,9 +1,13 @@
-package seedu.module.logic.commands;
+package seedu.module.logic.commands.deadlinecommands;
+
+import static seedu.module.logic.parser.CliSyntax.PREFIX_ACTION;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_LIST_NUMBER;
 
 import java.util.List;
 
 import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
+import seedu.module.logic.commands.CommandResult;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
 import seedu.module.model.module.TrackedModule;
@@ -12,16 +16,17 @@ import seedu.module.model.module.TrackedModule;
  * Deletes a specified deadline task from a module's deadline list.
  */
 public class DeleteDeadlineTaskCommand extends DeadlineCommand {
+
     public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Deleted deadline from module: %1$s";
-    public static final String MESSAGE_DELETE_DEADLINE_FAIL = "Unable to delete deadline from module: %1$s";
+    public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Deleted the deadline task from module: %1$s";
+    public static final String MESSAGE_DELETE_DEADLINE_FAIL = "Unable to delete the deadline task from module: %1$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes entire Deadline list identified by the index number used in the displayed Module list.\n"
+            + ": Deletes Deadline task identified by the index number used in the displayed Module list.\n"
             + "Parameters: INDEX (must be a positive integer), \n"
             + "TASK(must be a positive integer) \n"
-            + "Example: deadline 2 a/" + COMMAND_WORD + " task/2";
+            + "Example: deadline 2 " + PREFIX_ACTION + " " + COMMAND_WORD + " " + PREFIX_TASK_LIST_NUMBER + " 2";
 
     private Index index;
     private int taskListNum;
@@ -50,11 +55,11 @@ public class DeleteDeadlineTaskCommand extends DeadlineCommand {
     }
 
     /**
-     * Generates a command execution success message based on whether the remark is added to or removed from
-     * {@code moduleToEdit}.
+     * Generates a command execution success message based on whether the deadline task is removed from
+     * {@code moduleToDeleteDeadline}.
      */
-    private String generateSuccessMessage(TrackedModule moduleToAddDeadline) {
+    private String generateSuccessMessage(TrackedModule moduleToDeleteDeadline) {
         String message = MESSAGE_DELETE_DEADLINE_SUCCESS;
-        return String.format(message, moduleToAddDeadline);
+        return String.format(message, moduleToDeleteDeadline);
     }
 }

@@ -1,13 +1,15 @@
-package seedu.module.logic.parser;
+package seedu.module.logic.parser.deadlinecommandparsers;
 
 import static seedu.module.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_LIST_NUMBER;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.module.commons.core.index.Index;
-import seedu.module.logic.commands.EditDeadlineCommand;
-import seedu.module.logic.commands.EditDeadlineDescCommand;
-import seedu.module.logic.commands.EditDeadlineTimeCommand;
+import seedu.module.logic.commands.deadlinecommands.EditDeadlineCommand;
+import seedu.module.logic.commands.deadlinecommands.EditDeadlineDescCommand;
+import seedu.module.logic.commands.deadlinecommands.EditDeadlineTimeCommand;
+import seedu.module.logic.parser.ArgumentMultimap;
+import seedu.module.logic.parser.ParserUtil;
 import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.model.module.Deadline;
 

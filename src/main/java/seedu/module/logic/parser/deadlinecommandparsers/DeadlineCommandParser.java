@@ -1,4 +1,4 @@
-package seedu.module.logic.parser;
+package seedu.module.logic.parser.deadlinecommandparsers;
 
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_ACTION;
@@ -7,7 +7,10 @@ import static seedu.module.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_LIST_NUMBER;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TIME;
 
-import seedu.module.logic.commands.DeadlineCommand;
+import seedu.module.logic.commands.deadlinecommands.DeadlineCommand;
+import seedu.module.logic.parser.ArgumentMultimap;
+import seedu.module.logic.parser.ArgumentTokenizer;
+import seedu.module.logic.parser.Parser;
 import seedu.module.logic.parser.exceptions.ParseException;
 
 /**
@@ -25,17 +28,17 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeadlineCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT));
         }
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_TASK_LIST_NUMBER,
-                PREFIX_DESCRIPTION, PREFIX_TIME);
+                PREFIX_DESCRIPTION, PREFIX_TIME, PREFIX_TAG);
         try {
             if (!argMultimap.getValue(PREFIX_ACTION).isPresent()) {
                 throw new ParseException("Input format error. a/ACTION not found");
             }
             if (argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {
                 ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_DESCRIPTION,
-                        PREFIX_TIME);
+                        PREFIX_TIME, PREFIX_TAG);
                 return new AddDeadlineCommandParser().parse(newArgMultimap);
             } else if (argMultimap.getValue(PREFIX_ACTION).get().equals("edit")) {
                 ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
@@ -53,15 +56,11 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
                 ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
                         PREFIX_TASK_LIST_NUMBER);
                 return new InProgressDeadlineCommandParser().parse(newArgMultimap);
-            } else if (argMultimap.getValue(PREFIX_ACTION).get().equals("priority")) {
-                ArgumentMultimap newArgMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION,
-                        PREFIX_TAG, PREFIX_TASK_LIST_NUMBER);
-                return new PriorityDeadlineCommandParser().parse(newArgMultimap);
             } else {
                 throw new ParseException("Command not recognised");
             }
         } catch (ParseException e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeadlineCommand.MESSAGE_USAGE, e));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, e));
         }
     }
 }

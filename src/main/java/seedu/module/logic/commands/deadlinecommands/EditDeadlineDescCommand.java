@@ -1,9 +1,10 @@
-package seedu.module.logic.commands;
+package seedu.module.logic.commands.deadlinecommands;
 
 import java.util.List;
 
 import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
+import seedu.module.logic.commands.CommandResult;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
 import seedu.module.model.module.Deadline;
@@ -13,6 +14,7 @@ import seedu.module.model.module.TrackedModule;
  * Edits deadline description of a module.
  */
 public class EditDeadlineDescCommand extends EditDeadlineCommand {
+
     private Index index;
     private String description;
     private int taskListNum;
@@ -32,23 +34,23 @@ public class EditDeadlineDescCommand extends EditDeadlineCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);
         }
 
-        TrackedModule moduleToEditDeadline = lastShownList.get(index.getZeroBased());
-        deadline = moduleToEditDeadline.getDeadlineList().get(taskListNum - 1);
+        TrackedModule moduleToEditDescription = lastShownList.get(index.getZeroBased());
+        deadline = moduleToEditDescription.getDeadlineList().get(taskListNum - 1);
         deadline.editDescription(description);
 
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
         model.displayTrackedList();
 
-        return new CommandResult(generateSuccessMessage(moduleToEditDeadline));
+        return new CommandResult(generateSuccessMessage(moduleToEditDescription));
     }
 
     /**
-     * Generates a command execution success message based on whether the remark is added to or removed from
-     * {@code moduleToEdit}.
+     * Generates a command execution success message based on whether the description of deadline task is edited in
+     * {@code moduleToEditDescription}.
      */
-    private String generateSuccessMessage(TrackedModule moduleToAddDeadline) {
+    private String generateSuccessMessage(TrackedModule moduleToEditDescription) {
         String message = !deadline.getDescription().isEmpty() ? MESSAGE_EDIT_DEADLINE_SUCCESS
                 : MESSAGE_EDIT_DEADLINE_FAIL;
-        return String.format(message, moduleToAddDeadline);
+        return String.format(message, moduleToEditDescription);
     }
 }

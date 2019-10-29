@@ -1,9 +1,10 @@
-package seedu.module.logic.commands;
+package seedu.module.logic.commands.deadlinecommands;
 
 import java.util.List;
 
 import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
+import seedu.module.logic.commands.CommandResult;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
 import seedu.module.model.module.Deadline;
@@ -32,23 +33,23 @@ public class EditDeadlineTimeCommand extends EditDeadlineCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);
         }
 
-        TrackedModule moduleToEditDeadline = lastShownList.get(index.getZeroBased());
-        deadline = moduleToEditDeadline.getDeadlineList().get(taskListNum - 1);
+        TrackedModule moduleToEditTime = lastShownList.get(index.getZeroBased());
+        deadline = moduleToEditTime.getDeadlineList().get(taskListNum - 1);
         deadline.editTime(time);
 
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
         model.displayTrackedList();
 
-        return new CommandResult(generateSuccessMessage(moduleToEditDeadline));
+        return new CommandResult(generateSuccessMessage(moduleToEditTime));
     }
 
     /**
-     * Generates a command execution success message based on whether the remark is added to or removed from
-     * {@code moduleToEdit}.
+     * Generates a command execution success message based on whether the time of deadline task is edited in
+     * {@code moduleToEditTime}.
      */
-    private String generateSuccessMessage(TrackedModule moduleToAddDeadline) {
+    private String generateSuccessMessage(TrackedModule moduleToEditTime) {
         String message = !deadline.getDescription().isEmpty() ? MESSAGE_EDIT_DEADLINE_SUCCESS
                 : MESSAGE_EDIT_DEADLINE_FAIL;
-        return String.format(message, moduleToAddDeadline);
+        return String.format(message, moduleToEditTime);
     }
 }
