@@ -1,8 +1,5 @@
 package seedu.module.logic.commands.deadlinecommands;
 
-import java.util.List;
-
-import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.CommandResult;
 import seedu.module.logic.commands.exceptions.CommandException;
@@ -27,13 +24,7 @@ public class EditDeadlineTimeCommand extends EditDeadlineCommand {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        List<TrackedModule> lastShownList = model.getFilteredModuleList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);
-        }
-
-        TrackedModule moduleToEditTime = lastShownList.get(index.getZeroBased());
+        TrackedModule moduleToEditTime = model.getTrackedModuleByIndex(model, index);
         deadline = moduleToEditTime.getDeadlineList().get(taskListNum - 1);
         deadline.editTime(time);
 

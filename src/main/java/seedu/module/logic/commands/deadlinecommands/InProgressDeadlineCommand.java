@@ -2,9 +2,6 @@ package seedu.module.logic.commands.deadlinecommands;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_ACTION;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_LIST_NUMBER;
 
-import java.util.List;
-
-import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.CommandResult;
 import seedu.module.logic.commands.exceptions.CommandException;
@@ -40,13 +37,7 @@ public class InProgressDeadlineCommand extends DeadlineCommand {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        List<TrackedModule> lastShownList = model.getFilteredModuleList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);
-        }
-
-        moduleToMarkInProgress = lastShownList.get(index.getZeroBased());
+        TrackedModule moduleToMarkInProgress = model.getTrackedModuleByIndex(model, index);
         moduleToMarkInProgress.markDeadlineTaskAsInProgress(taskListNum - 1);
 
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
