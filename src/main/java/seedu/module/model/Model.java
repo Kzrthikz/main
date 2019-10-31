@@ -6,9 +6,12 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.module.commons.core.GuiSettings;
+import seedu.module.commons.core.index.Index;
+import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.Module;
 import seedu.module.model.module.TrackedModule;
+import seedu.module.model.module.predicate.SameModuleCodePredicate;
 
 /**
  * The API of the Model component.
@@ -106,6 +109,14 @@ public interface Model {
     ObservableList<Module> getDisplayedList();
 
     /**
+     * Returns a TrackedModule by the index of deadline task list.
+     * @param model
+     * @param index
+     * @return TrackedModule object.
+     */
+    TrackedModule getTrackedModuleByIndex(Model model, Index index) throws CommandException;
+
+    /**
      * Changes the current list to be shown to the ArchivedModuleList.
      */
     void displayArchivedList();
@@ -122,6 +133,7 @@ public interface Model {
 
     /**
      * Sets the active module that will be viewed by the user.
+     *
      * @param toDisplay the module to be displayed
      */
     void setDisplayedModule(Module toDisplay);
@@ -132,5 +144,17 @@ public interface Model {
      * The module identity of {@code editedModule} must not be the same as another existing module in the module book.
      */
     void setModule(TrackedModule target, TrackedModule editedModule);
+
+    /**
+     * Finds and returns an  {@literal Optional<ArchivedModule>} from filteredArchivedModules based on the predicate.
+     */
+    Optional<ArchivedModule> findArchivedModule(SameModuleCodePredicate predicate);
+
+    /**
+     * Finds and returns an {@literal Optional<TrackedModule>} from filteredTrackedModules based on the predicate.
+     */
+    Optional<TrackedModule> findTrackedModule(SameModuleCodePredicate predicate);
+
+
 }
 

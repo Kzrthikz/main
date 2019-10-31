@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.module.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.module.testutil.Assert.assertThrows;
-import static seedu.module.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import seedu.module.logic.commands.AddCommand;
@@ -24,32 +24,35 @@ import seedu.module.logic.commands.ListCommand;
 import seedu.module.logic.commands.ViewCommand;
 import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.model.module.ArchivedModule;
-import seedu.module.model.module.NameContainsKeywordsPredicate;
+import seedu.module.model.module.Module;
+import seedu.module.model.module.TrackedModule;
+import seedu.module.model.module.predicate.ModuleCodeContainsKeywordsPredicate;
+import seedu.module.model.module.predicate.SameModuleCodePredicate;
 import seedu.module.testutil.ArchivedModuleBuilder;
+import seedu.module.testutil.TrackedModuleBuilder;
 
 public class ModuleBookParserTest {
 
     private final ModuleBookParser parser = new ModuleBookParser();
 
-    // TODO: Fix this test
-    @Disabled("Cannot determine equality of AddCommand")
     @Test
     public void parseCommand_add() throws Exception {
         ArchivedModule archivedModule = new ArchivedModuleBuilder().build();
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(
-            List.of(archivedModule.getModuleCode()));
+        SameModuleCodePredicate predicate = new SameModuleCodePredicate(archivedModule.getModuleCode());
 
         AddCommand command = (AddCommand) parser.parseCommand(AddCommand.COMMAND_WORD
-            + " " + archivedModule.getModuleCode());
+                + " " + archivedModule.getModuleCode());
         assertEquals(new AddCommand(predicate), command);
     }
 
-    // TODO: Adapt this test to ModuleBook
     @Test
     public void parseCommand_delete() throws Exception {
+        TrackedModule trackedModule = new TrackedModuleBuilder().build();
+        SameModuleCodePredicate predicate = new SameModuleCodePredicate(trackedModule.getModuleCode());
+
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + trackedModule.getModuleCode());
+        assertEquals(new DeleteCommand(predicate), command);
     }
 
     @Test
@@ -58,13 +61,17 @@ public class ModuleBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
-    // TODO: Adapt this test to ModuleBook
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        List<String> keywords = Arrays.asList("mod\\", "cs2030", "ma1521");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+
+        List<String> predicateKeywords = Arrays.asList("cs2030", "ma1521");
+        ModuleCodeContainsKeywordsPredicate predicate = new ModuleCodeContainsKeywordsPredicate(predicateKeywords);
+        ArrayList<Predicate<Module>> listOfPredicates = new ArrayList<>();
+        listOfPredicates.add(predicate);
+        assertEquals(new FindCommand(listOfPredicates), command);
     }
 
     @Test
@@ -85,7 +92,7 @@ public class ModuleBookParserTest {
         ArchivedModule archivedModule = new ArchivedModuleBuilder().build();
 
         ViewCommand command = (ViewCommand) parser.parseCommand(ViewCommand.COMMAND_WORD
-            + " " + archivedModule.getModuleCode());
+                + " " + archivedModule.getModuleCode());
         assertEquals(new ViewCommand(archivedModule.getModuleCode()), command);
     }
 
@@ -98,7 +105,7 @@ public class ModuleBookParserTest {
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-             HelpCommand.MESSAGE_USAGE), ()
+                HelpCommand.MESSAGE_USAGE), ()
                 -> parser.parseCommand(""));
     }
 

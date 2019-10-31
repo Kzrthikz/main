@@ -171,14 +171,19 @@ The module view feature is facilitated by `displayedModule` in `ModelManager`. T
 
 The following sequence diagram shows how the module view feature is executed.
 
+.Module View Sequence Diagram
 image::ModuleViewSequenceDiagram.png[]
 
 [NOTE]
-The `BackCommand` mostly follows the same sequence as described above, except that it sets the displayed module to `null`.
+The `BackCommand` mostly follows the same sequence as described above, except that it does not need to find any module, and sets the displayed module to `null`.
 
 The following sequence diagram shows how the `ViewCommand` attempts to find the module from the `Model`.
 
+.Reference Diagram for finding a matching module
 image::ModuleViewSequenceDiagram_FindModule.png[]
+
+[NOTE]
+`TrackedModule` composes of an `ArchivedModule`. If a `TrackedModule` is found, it is guaranteed the corresponding `ArchivedModule` can be found.
 
 ==== Design Considerations
 
@@ -207,27 +212,26 @@ Cons:
 // end::moduleview[]
 
 // tag::searchfitering[]
-=== [Proposed] Search filtering feature
-==== Proposed Implementation
+=== Search filtering feature
+==== Implementation
 
-The search filtering feature would be an enhancement to the current available search feature. Using different categories of predicates
-to narrow down the search space of the archived module list. The user should be able to able to combine different categories
-of search to find modules that passes all the user defined filters. This can be achieved through the use of `FilteredList`
-which can be updated incrementally with each filter applied. This would require additional classes that searches their individual fields
-for the keywords. For example:
+The search filtering feature Uses different categories of predicates
+to narrow down the search space of the archived module list. The user is able to able to combine different categories
+of search to find modules that passes all the user defined filters. This can be achieved through the use of `Predicate`
+which can be chained with additional predicates and applied to a `FilteredList`. This requires additional predicate classes that searches their individual fields
+for the keywords.:
 
-* `DescriptionContainsKeywordsPredicate#test()` -- Tests that a `module` description matches any of the keywords given.
+* `ModuleCodeContainsKeywordsPredicate#test()` -- Tests that a `module` module code matches any of the keywords given.
+* `DescriptionContainsKeywordsPredicate#test()` -- Tests that a `module` description matches the keyword or sentence given.
 * `PrerequisiteContainsKeywordsPredicate()#test()` -- Tests that a `module` prerequisites matches any of the keywords given.
-* `PreclusionContainsKeywordsPredicate()#test()` -- Tests that a `module` preclusions matches any of the keywords given.
-* `ModuleCreditContainsKeywordsPredicate()#test()` -- Tests that a `module` credits matches any of the keywords given.
 * `PreclusionContainsKeywordsPredicate()#test()` -- Tests that a `module` preclusions matches any of the keywords given.
 * `SemesterContainsKeywordsPredicate()#test()` -- Tests that a `module` semester matches any of the keywords given.
 
-The user should be able to use any combination of filters and the order of input should not matter. Examples of valid find commands:
+The user is able to use any combination of filters and the order of input should not matter. Examples of valid find commands:
 
 ****
-* `find module\cs2` : Should display a list of modules with module code containing "cs2"
-* `find module\cs2 prereq\ cs2040` : Should display a list of modules with module code containing "cs" and with prerequisite of "cs2040"
+* `find module\ cs2` : Should display a list of modules with module code containing "cs2"
+* `find module\ cs2 prereq\ cs2040` : Should display a list of modules with module code containing "cs" and with prerequisite of "cs2040"
 ****
 
 The following sequence diagram shows how the find operation wold work:
@@ -240,10 +244,7 @@ NOTE: The lifeline for `FindCommand` should end at the destroy marker (X) but du
 As represented in Fig 9, when a `FindCommandParser` is constructed by `ModuleBookParser#parseCommand`, the `FindCommandParser` would construct a list
 of `Predicate<module>` based on the parsed arguments, which is used to construct a `FindCommand`.
 
-During the execution of `FindCommand#execute()`, each predicate is applied one by one to the `FilteredList`, the contents of the `FilteredList` are copied
-before the next predicate is applied.
-
-NOTE: Should one of the predicate result an empty `Filtered List`, it is possible to skip the rest of the predicates.
+During the execution of `FindCommand#execute()`, each predicate is chained and applied to the `FilteredList`.
 
 Finally, a `FilteredList` of `Modules` that passes all of the filters will be displayed.
 
@@ -348,6 +349,57 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: `config.json`).
+
+=== Link Management Feature
+
+The link management feature allows users to add and manage a set of website links that will be associated with a given module.
+
+==== Implementation
+
+The link management feature is facilitated by the `link` class.
+
+Each `link` object is stored in an `ArrayList<Link>`, which in turn is stored in its corresponding `TrackedModule`.
+
+The link feature currently supports add, delete, edit and launch commands.
+
+An example usage scenario of an *add link* operation is given below and the behavior of the link management feature is shown.
+
+1. The user launches the application with an existing save file. `ModuleBook` is initialized with existing `TrackedModule`.
+
+2. The user inputs `link MODULE_INDEX a/add n/LINK_NAME l/LINK_URL` to add a link with name `LINK_NAME`, linked to `LINK_URL` to the `TrackedModule` with the corresponding `MODULE_INDEX`.
+
+3. `LogicManager` receives user input and parses it using `ModuleBookParser#parseCommand()`.  `ModuleBookParser` reads the `COMMAND_WORD` and identifies the input as a `Link` related command and passes the input to `LinkCommandParser`.
+
+4. `LinkCommandParser` determines the `add` action required through the `a/` prefix argument. It then proceeds to pass the relevant input to  `AddLinkCommandParser`.
+
+5. `AddLinkCommandParser` checks for the validity of `LINK_URL` given by the user and creates the relevant `Link` and `AddLinkCommand` objects.
+
+6. `AddLinkCommand` calls `Model#get(MODULE_INDEX)` to find the required module. If it does not exist or is not currently tracked, `AddLinkCommand` throws a `CommandException`. Otherwise, it then proceeds to call `TrackedModule#hasLinkTitle(LINK_NAME)` to check for an existing `Link` object with the same `LINK_NAME`.
+
+7. If such a `Link` object exists, `AddLinkCommand` aborts and throws a `CommandException`. Otherwise, the created `Link` will be added to the specified `TrackedModule`.
+
+8. If the operation is successful, a `CommandResult` with the success message will be returned.
+
+.Sequence diagram for add link operation
+image::AddLinkCommandSequenceDiagram.png[]
+.Reference of add link to module function from sequence diagram shown above
+image::AddLinkCommandSequenceDiagramExtension.png[]
+
+==== Design Considerations
+
+Aspect: Data structure used for link management
+
+* Alternative 1 (current choice): All `TrackedModule` maintain a `ArrayList<Link>`. Adding `Link` objects will add to this `ArrayList`.
+
+** Pros: Easy to implement and edit for beginner programmers.
+
+** Cons: Accessing and editing existing `Link` might be less efficient. If number of `Link` objects maintained increases, `ArrayList` may not be optimal.
+
+* Alternative 2: Use `HashSet<Link>` to maintain `Link` in each `TrackedModule`
+
+** Pros: Reduces access time, since `Link` objects can be obtained by giving `LINK_TITLE`, rather than searching the list linearly for a matching object.
+
+** Cons: Difficult to add features. Future implmentations may add a `Priority` feature to `Link` objects. `HashSet` does not support any form of sorting and thus may pose a problem.
 
 == Documentation
 
@@ -543,12 +595,10 @@ _{ more test cases ... }_
 . Deleting a module while all modules are listed
 
 .. Prerequisites: List all modules using the `list` command. Multiple modules in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
+.. Test case: `delete cs2103t` +
+   Expected: Module with module code cs2103t is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `delete INVALID_MODULE_CODE` +
    Expected: No module is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
 
 _{ more test cases ... }_
 

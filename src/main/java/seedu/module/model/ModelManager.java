@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.module.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,9 +14,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.module.commons.core.GuiSettings;
 import seedu.module.commons.core.LogsCenter;
+import seedu.module.commons.core.Messages;
+import seedu.module.commons.core.index.Index;
+import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.Module;
 import seedu.module.model.module.TrackedModule;
+import seedu.module.model.module.predicate.SameModuleCodePredicate;
 
 /**
  * Represents the in-memory model of the module book data.
@@ -143,6 +148,27 @@ public class ModelManager implements Model {
         filteredTrackedModules.setPredicate(predicate);
     }
 
+    /**
+     * Finds and returns an {@literal Optional<TrackedModule>} from filteredArchivedModules based on the predicate.
+     * Returns an empty Optional if the module is not found.
+     */
+    @Override
+    public Optional<TrackedModule> findTrackedModule(SameModuleCodePredicate predicate) {
+        Optional<TrackedModule> foundModule = filteredTrackedModules.stream()
+                .filter(predicate)
+                .findFirst();
+        return foundModule;
+    }
+
+    public TrackedModule getTrackedModuleByIndex(Model model, Index index) throws CommandException {
+        List<TrackedModule> lastShownList = model.getFilteredModuleList();
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);
+        }
+        TrackedModule moduleToReturn = lastShownList.get(index.getZeroBased());
+        return moduleToReturn;
+    }
+
     //=========== Filtered ArchivedModule List Accessors =============================================================
 
     /**
@@ -158,6 +184,18 @@ public class ModelManager implements Model {
     public void updateFilteredArchivedModuleList(Predicate<Module> predicate) {
         requireNonNull(predicate);
         filteredArchivedModules.setPredicate(predicate);
+    }
+
+    /**
+     * Finds and returns an {@literal Optional<ArchivedModule>} from filteredArchivedModules based on the predicate.
+     * Returns an empty Optional if the module is not found.
+     */
+    @Override
+    public Optional<ArchivedModule> findArchivedModule(SameModuleCodePredicate predicate) {
+        Optional<ArchivedModule> foundModule = filteredArchivedModules.stream()
+                .filter(predicate)
+                .findFirst();
+        return foundModule;
     }
 
     //=========== Displayed List Accessors =============================================================
