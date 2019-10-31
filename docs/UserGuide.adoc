@@ -156,7 +156,7 @@ as *in-progress* with a dash on the checkbox for the respective module.
 
 Example: `deadline 1 a/inProgress task/1`
 
-==== `sort`
+==== `sort`(Coming in mid V1.4)
 
 1.Sort by Time
 
