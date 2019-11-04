@@ -1,5 +1,6 @@
 package seedu.module.storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,7 @@ class JsonAdaptedModule {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted module.
      */
-    public TrackedModule toModelType(ArchivedModuleList archivedModules) throws IllegalValueException {
+    public TrackedModule toModelType(ArchivedModuleList archivedModules) throws IllegalValueException, ParseException {
         if (moduleCode == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "moduleCode"));
         }

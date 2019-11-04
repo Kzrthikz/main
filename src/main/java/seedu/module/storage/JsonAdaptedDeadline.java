@@ -1,5 +1,7 @@
 package seedu.module.storage;
 
+import java.text.ParseException;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.module.commons.exceptions.IllegalValueException;
@@ -32,7 +34,7 @@ public class JsonAdaptedDeadline {
         this.tag = source.getTag();
     }
 
-    public Deadline toModelType() throws IllegalValueException {
+    public Deadline toModelType() throws IllegalValueException, ParseException {
         return new Deadline(description, time, tag);
     }
 }

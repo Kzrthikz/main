@@ -1,6 +1,7 @@
 package seedu.module.model.module;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class DeadlineList {
      */
     public void addDeadline (Deadline deadline) {
         this.deadlineList.add(deadline);
+        Collections.sort(deadlineList, new DeadlineComparator());
     }
 
     /**
@@ -50,5 +52,9 @@ public class DeadlineList {
             deadlineString += ((i + 1) + ". " + deadlineList.get(i)) + "\n";
         }
         return deadlineString;
+    }
+
+    public String getDeadlineTask(int i) {
+        return (i + 1) + ". " + deadlineList.get(i).toString();
     }
 }

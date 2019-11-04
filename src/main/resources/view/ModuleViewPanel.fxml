@@ -73,7 +73,8 @@
          </Accordion>
          <HBox alignment="CENTER_LEFT" spacing="5" VBox.vgrow="NEVER">
             <children>
-               <Label fx:id="deadline" styleClass="label-bright" text="\$deadline" />
+               <Text styleClass="label-bright" />
+                <TextFlow fx:id="deadline" />
             </children>
          </HBox>
          <HBox alignment="BOTTOM_LEFT" VBox.vgrow="NEVER">

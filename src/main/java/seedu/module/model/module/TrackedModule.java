@@ -54,6 +54,9 @@ public class TrackedModule implements Module, Trackable {
         return deadlineList.toString();
     }
 
+    public String getDeadlineTask(int i) {
+        return deadlineList.getDeadlineTask(i);
+    }
     public List<Deadline> getDeadlineList() {
         return deadlineList.getDeadlineList();
     }

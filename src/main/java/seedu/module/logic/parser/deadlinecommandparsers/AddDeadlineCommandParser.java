@@ -32,11 +32,14 @@ public class AddDeadlineCommandParser {
             if (argsMultimap.getValue(PREFIX_TAG).isPresent()) {
                 tag = argsMultimap.getValue(PREFIX_TAG).get();
             }
-            Deadline deadline = new Deadline(description, time, tag);
-            return new AddDeadlineCommand(index, deadline);
+            try {
+                Deadline deadline = new Deadline(description, time, tag);
+                return new AddDeadlineCommand(index, deadline);
+            } catch (java.text.ParseException ex) {
+                throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            }
         } else {
             throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
-
     }
 }

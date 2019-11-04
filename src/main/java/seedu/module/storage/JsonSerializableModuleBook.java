@@ -1,5 +1,6 @@
 package seedu.module.storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ class JsonSerializableModuleBook {
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
-    public ModuleBook toModelType(ArchivedModuleList archivedModules) throws IllegalValueException {
+    public ModuleBook toModelType(ArchivedModuleList archivedModules) throws IllegalValueException, ParseException {
         ModuleBook moduleBook = new ModuleBook(archivedModules);
         for (JsonAdaptedModule jsonAdaptedModule : modules) {
             TrackedModule trackedModule = jsonAdaptedModule.toModelType(archivedModules);
