@@ -187,6 +187,15 @@ as *done* with a tick for the respective module.
 
 Example: `deadline 1 a/done task/2`
 
+==== `doneAll`
+
+Format: `deadline MODULE_LIST_NUM a/doneAll`
+
+Marks all the deadline tasks in deadline list
+as *done* with a tick next to it.
+
+Example: `deadline 1 a/doneAll`
+
 ==== `in Progress`
 
 Format: `deadline MODULE_LIST_NUM a/inProgress task/TASK_NUMBER_IN_LIST`
@@ -203,6 +212,14 @@ Format: `deadline MODULE_LIST_NUM a/delete task/TASK_NUMBER_IN_LIST`
 Deletes deadline task numbered from the respective module.
 
 Example: `deadline 1 a/delete task/2`
+
+==== `deleteAll`
+
+Format: `deadline MODULE_LIST_NUM a/deleteAll`
+
+Deletes all the deadline tasks from the respective module.
+
+Example: `deadline 1 a/deleteAll`
 
 === Manage links in modules: `link`
 
