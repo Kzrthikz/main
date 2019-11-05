@@ -47,7 +47,7 @@ public class DoneDeadlineCommand extends DeadlineCommand {
 
     /**
      * Generates a command execution success message based on whether the deadline task is marked as done from
-     * {@code moduleMarkDone}.
+     * {@code moduleToMarkDone}.
      */
     private String generateSuccessMessage(TrackedModule moduleToMarkDone) {
         String message = MESSAGE_DONE_DEADLINE_SUCCESS;

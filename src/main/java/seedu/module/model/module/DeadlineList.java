@@ -34,8 +34,21 @@ public class DeadlineList {
         this.deadlineList.remove(taskListNum);
     }
 
+    public void deleteAllDeadlineTasks() {
+        this.deadlineList.clear();
+    }
+
     public void markDeadlineTaskAsDone(int taskListNum) {
         deadlineList.get(taskListNum).markAsDone();
+    }
+
+    /**
+     * marks all deadline tasks as done.
+     */
+    public void markAllDone() {
+        for (int i = 0; i < deadlineList.size(); i++) {
+            this.markDeadlineTaskAsDone(i);
+        }
     }
 
     public void markDeadlineTaskAsInProgress(int taskListNum) {

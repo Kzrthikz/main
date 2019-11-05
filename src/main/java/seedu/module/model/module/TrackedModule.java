@@ -57,6 +57,7 @@ public class TrackedModule implements Module, Trackable {
     public String getDeadlineTask(int i) {
         return deadlineList.getDeadlineTask(i);
     }
+
     public List<Deadline> getDeadlineList() {
         return deadlineList.getDeadlineList();
     }
@@ -69,12 +70,19 @@ public class TrackedModule implements Module, Trackable {
         deadlineList.markDeadlineTaskAsDone(taskListNum);
     }
 
+    public void markAllDone() {
+        deadlineList.markAllDone();
+    }
+
     public void markDeadlineTaskAsInProgress(int taskListNum) {
         deadlineList.markDeadlineTaskAsInProgress(taskListNum);
     }
 
     public void deleteDeadlineTask(int taskListNum) {
         deadlineList.deleteDeadlineTask(taskListNum);
+    }
+    public void deleteAllDeadlineTasks() {
+        deadlineList.deleteAllDeadlineTasks();
     }
 
     public List<Link> getLink() {
