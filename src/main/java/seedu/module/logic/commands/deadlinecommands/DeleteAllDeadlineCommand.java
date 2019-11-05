@@ -48,6 +48,6 @@ public class DeleteAllDeadlineCommand extends DeadlineCommand {
      */
     private String generateSuccessMessage(TrackedModule moduleToDeleteDeadline) {
         String message = MESSAGE_DELETE_ALL_DEADLINE_SUCCESS;
-        return String.format(message, moduleToDeleteDeadline);
+        return String.format(message, moduleToDeleteDeadline.getModuleCode() + " " + moduleToDeleteDeadline.getTitle());
     }
 }

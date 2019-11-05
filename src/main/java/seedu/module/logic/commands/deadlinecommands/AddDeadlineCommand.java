@@ -42,7 +42,13 @@ public class AddDeadlineCommand extends DeadlineCommand {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        if (deadline.getDescription().equals("") || deadline.getTime().equals("") || deadline.getTag().equals("")) {
+            throw new CommandException("Description, Time and Tag inputs cannot be empty.");
+        }
         TrackedModule moduleToAddDeadline = model.getTrackedModuleByIndex(model, index);
+        if (moduleToAddDeadline.hasDeadline(deadline)) {
+            throw new CommandException(MESSAGE_DUPLICATE_DEADLINE);
+        }
         moduleToAddDeadline.addDeadline(deadline);
 
         model.updateFilteredModuleList(Model.PREDICATE_SHOW_ALL_MODULES);
@@ -59,7 +65,7 @@ public class AddDeadlineCommand extends DeadlineCommand {
     private String generateSuccessMessage(TrackedModule moduleToAddDeadline) {
         String message = !deadline.getDescription().isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS
                 : MESSAGE_DELETE_DEADLINE_SUCCESS;
-        return String.format(message, moduleToAddDeadline);
+        return String.format(message, moduleToAddDeadline.getModuleCode() + " " + moduleToAddDeadline.getTitle());
     }
 
     @Override

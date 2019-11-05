@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.module.commons.exceptions.IllegalValueException;
+import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.ModuleBook;
 import seedu.module.model.ReadOnlyModuleBook;
 import seedu.module.model.module.ArchivedModuleList;
@@ -47,7 +48,8 @@ class JsonSerializableModuleBook {
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
-    public ModuleBook toModelType(ArchivedModuleList archivedModules) throws IllegalValueException, ParseException {
+    public ModuleBook toModelType(ArchivedModuleList archivedModules) throws IllegalValueException, ParseException,
+            CommandException {
         ModuleBook moduleBook = new ModuleBook(archivedModules);
         for (JsonAdaptedModule jsonAdaptedModule : modules) {
             TrackedModule trackedModule = jsonAdaptedModule.toModelType(archivedModules);

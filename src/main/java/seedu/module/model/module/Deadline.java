@@ -2,10 +2,12 @@ package seedu.module.model.module;
 
 import static java.util.Objects.requireNonNull;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EnumSet;
+
+import seedu.module.logic.commands.exceptions.CommandException;
+import seedu.module.logic.parser.exceptions.ParseException;
 
 /**
  * Represents Priority tags in Enum
@@ -31,26 +33,50 @@ public class Deadline {
     private boolean isInProgress;
     private String tag;
 
-    public Deadline (String description, String time, String tag) throws ParseException {
+    public Deadline (String description, String time, String tag) throws ParseException, CommandException {
         requireNonNull(description);
+        int maxLength = 70;
+        if (description.length() > maxLength) {
+            description = description.substring(0, maxLength);
+        }
         this.description = description;
         this.time = time;
         if (!isValidPriority(tag)) {
             this.tag = tag;
         } else {
-            throw new IllegalArgumentException("Not a valid priority tag");
+            throw new CommandException("Not a valid priority tag");
         }
-        this.date = parseDate(time);
+        if (isDateValid(time)) {
+            this.date = parseDate(time);
+        } else {
+            throw new CommandException("Date and time not in dd/MM/yyyy HHmm format");
+        }
     }
 
     /**
-     * Validates priority tag
-     * @param tag priority tag
-     * @return true if input tag is valid, false otherwise
+     * Validates priority tag.
+     * @param tag priority tag.
+     * @return true if input tag is valid, false otherwise.
      */
     public boolean isValidPriority(String tag) {
         EnumSet<Priority> except = EnumSet.of(Priority.HIGH, Priority.MEDIUM, Priority.LOW);
         return !except.contains(Priority.valueOf(tag));
+    }
+
+    /**
+     * Validates date and time.
+     * @param date date in String.
+     * @return true if input date is valid false if input date is invalid.
+     */
+    public static boolean isDateValid(String date) {
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HHmm");
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (java.text.ParseException e) {
+            return false;
+        }
     }
 
     /**
@@ -66,6 +92,18 @@ public class Deadline {
      */
     public void markAsInProgress() {
         isInProgress = true;
+        isDone = false;
+    }
+
+    /**
+     * Marks the deadline task as undone.
+     * @throws CommandException when task is already undone.
+     */
+    public void markAsUndone() throws CommandException {
+        if (!isInProgress && !isDone) {
+            throw new CommandException("Deadline task already undone!");
+        }
+        isInProgress = false;
         isDone = false;
     }
 
@@ -117,8 +155,8 @@ public class Deadline {
         SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy HHmm");
         try {
             return parser.parse(s);
-        } catch (IllegalArgumentException | ParseException e) {
-            throw new ParseException("Date and time not in dd/MM/yyyy HHmm format", 1);
+        } catch (IllegalArgumentException | java.text.ParseException e) {
+            throw new ParseException("Date and time not in dd/MM/yyyy HHmm format");
         }
     }
 

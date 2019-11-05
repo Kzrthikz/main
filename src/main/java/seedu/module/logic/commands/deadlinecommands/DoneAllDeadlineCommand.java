@@ -49,7 +49,7 @@ public class DoneAllDeadlineCommand extends DeadlineCommand {
      */
     private String generateSuccessMessage(TrackedModule moduleToMarkDone) {
         String message = MESSAGE_DONE_ALL_DEADLINE_SUCCESS;
-        return String.format(message, moduleToMarkDone);
+        return String.format(message, moduleToMarkDone.getModuleCode() + " " + moduleToMarkDone.getTitle());
     }
 }
 

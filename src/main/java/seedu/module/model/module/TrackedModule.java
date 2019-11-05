@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.module.logic.commands.exceptions.CommandException;
+
 /**
  * Represents a TrackedModule in the ModuleList.
  */
@@ -74,6 +76,10 @@ public class TrackedModule implements Module, Trackable {
         deadlineList.markAllDone();
     }
 
+    public void markDeadlineTaskAsUndone(int taskListNum) throws CommandException {
+        deadlineList.markDeadlineTaskAsUndone(taskListNum);
+    }
+
     public void markDeadlineTaskAsInProgress(int taskListNum) {
         deadlineList.markDeadlineTaskAsInProgress(taskListNum);
     }
@@ -83,6 +89,21 @@ public class TrackedModule implements Module, Trackable {
     }
     public void deleteAllDeadlineTasks() {
         deadlineList.deleteAllDeadlineTasks();
+    }
+
+    /**
+     * Returns true if there exists a deadline with the same description, time and tag
+     * @param deadline
+     * @return
+     */
+    public boolean hasDeadline(Deadline deadline) {
+        for (Deadline d : deadlineList.getDeadlineList()) {
+            if (deadline.getDescription().equals(d.getDescription()) && deadline.getTime().equals(d.getTime())
+                    && deadline.getTag().equals(d.getTag())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Link> getLink() {
@@ -142,8 +163,7 @@ public class TrackedModule implements Module, Trackable {
         final StringBuilder builder = new StringBuilder();
         builder.append(getModuleCode())
                 .append(" Title: ").append(getTitle())
-                .append(" Description: ").append(getDescription())
-                .append(" Deadline: ").append(getDeadline());
+                .append(" Description: ").append(getDescription());
         return builder.toString();
     }
 

@@ -157,6 +157,7 @@ Format: `deadline MODULE_LIST_NUM a/add d/DESCRIPTION t/TIME p/PRIORITY`
 Adds deadline task consisting of description, time and priority tag to the respective module.
 Priority tags can be `HIGH`, `MEDIUM` OR `LOW`. Deadline tasks tagged as `HIGH` is displayed in red, `MEDIUM` in yellow
 and `LOW` in green. Deadline list is sorted according to priority and deadline date and time.
+All fields are compulsory.
 
 Example: `deadline 1 a/add d/tutorial 1 t/22/10/2019 2359 p/HIGH`
 
@@ -183,7 +184,7 @@ Example: `deadline 3 a/edit task/2 t/29/10/2018 2359`
 Format: `deadline MODULE_LIST_NUM a/done task/TASK_NUMBER_IN_LIST`
 
 Marks the deadline task numbered in deadline list
-as *done* with a tick for the respective module.
+as *done* with a tick.
 
 Example: `deadline 1 a/done task/2`
 
@@ -192,7 +193,7 @@ Example: `deadline 1 a/done task/2`
 Format: `deadline MODULE_LIST_NUM a/doneAll`
 
 Marks all the deadline tasks in deadline list
-as *done* with a tick next to it.
+as *done* with a tick.
 
 Example: `deadline 1 a/doneAll`
 
@@ -201,9 +202,18 @@ Example: `deadline 1 a/doneAll`
 Format: `deadline MODULE_LIST_NUM a/inProgress task/TASK_NUMBER_IN_LIST`
 
 Marks the deadline task numbered in deadline list
-as *in-progress* with a dash on the checkbox for the respective module.
+as *in-progress* with a dash.
 
 Example: `deadline 1 a/inProgress task/1`
+
+==== `undone`
+
+Format: `deadline MODULE_LIST_NUM a/undone task/TASK_NUMBER_IN_LIST`
+
+Marks the deadline task numbered in deadline list
+as *undone* with empty space.
+
+Example: `deadline 1 a/undone task/1`
 
 ==== `delete`
 

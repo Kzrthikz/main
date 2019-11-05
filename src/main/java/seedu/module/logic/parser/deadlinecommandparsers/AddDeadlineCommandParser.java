@@ -6,6 +6,7 @@ import static seedu.module.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.deadlinecommands.AddDeadlineCommand;
+import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.logic.parser.ArgumentMultimap;
 import seedu.module.logic.parser.ParserUtil;
 import seedu.module.logic.parser.exceptions.ParseException;
@@ -23,21 +24,15 @@ public class AddDeadlineCommandParser {
      * @return AddDeadlineCommand
      * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddDeadlineCommand parse(ArgumentMultimap argsMultimap) throws ParseException {
+    public AddDeadlineCommand parse(ArgumentMultimap argsMultimap) throws ParseException, CommandException {
         Index index = ParserUtil.parseIndex(argsMultimap.getPreamble());
-        if (argsMultimap.getValue(PREFIX_DESCRIPTION).isPresent() && argsMultimap.getValue(PREFIX_TIME).isPresent()) {
+        if (argsMultimap.getValue(PREFIX_DESCRIPTION).isPresent() && argsMultimap.getValue(PREFIX_TIME).isPresent()
+                && argsMultimap.getValue(PREFIX_TAG).isPresent()) {
             String description = argsMultimap.getValue(PREFIX_DESCRIPTION).get();
             String time = argsMultimap.getValue(PREFIX_TIME).get();
-            String tag = "";
-            if (argsMultimap.getValue(PREFIX_TAG).isPresent()) {
-                tag = argsMultimap.getValue(PREFIX_TAG).get();
-            }
-            try {
-                Deadline deadline = new Deadline(description, time, tag);
-                return new AddDeadlineCommand(index, deadline);
-            } catch (java.text.ParseException ex) {
-                throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
-            }
+            String tag = argsMultimap.getValue(PREFIX_TAG).get();
+            Deadline deadline = new Deadline(description, time, tag);
+            return new AddDeadlineCommand(index, deadline);
         } else {
             throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
