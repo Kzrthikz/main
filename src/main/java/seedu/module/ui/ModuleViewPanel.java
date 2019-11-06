@@ -60,10 +60,8 @@ public class ModuleViewPanel extends UiPart<Region> {
             .orElse("There are no preclusions for this module."));
         semesterData.setItems(module.getSemesterDetails().getAsObservableList());
         semesterData.setCellFactory(listView -> new ModuleSemesterDetailCell());
-
         // Expands the accordion if the module is not yet tracked
         moduleDetails.setExpandedPane(moduleDetailsPane);
-
         if (module instanceof Trackable) {
             moduleDetails.setExpandedPane(null);
             Trackable trackedModule = ((Trackable) module);
@@ -89,7 +87,9 @@ public class ModuleViewPanel extends UiPart<Region> {
             }
             trackedModule.getLink().stream().map(link -> new LinkButton(link))
                     .forEach(button -> links.getChildren().add(button));
+            links.setPrefWrapLength(500);
             links.setHgap(10);
+            links.setVgap(5);
         }
     }
 
