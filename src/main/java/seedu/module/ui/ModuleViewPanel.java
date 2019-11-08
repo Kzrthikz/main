@@ -13,6 +13,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.module.commons.core.LogsCenter;
@@ -28,6 +29,8 @@ public class ModuleViewPanel extends UiPart<Region> {
     private static final String FXML = "ModuleViewPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ModuleListPanel.class);
 
+    @FXML
+    private VBox moduleViewVBox;
     @FXML
     private Label moduleCode;
     @FXML
@@ -45,7 +48,15 @@ public class ModuleViewPanel extends UiPart<Region> {
     @FXML
     private ListView<SemesterDetail> semesterData;
     @FXML
+    private Accordion linksAccordion;
+    @FXML
+    private TitledPane linksAccordionPane;
+    @FXML
     private FlowPane links;
+    @FXML
+    private Accordion deadlinesAccordion;
+    @FXML
+    private TitledPane deadlinesAccordionPane;
     @FXML
     private TextFlow deadline;
 
@@ -60,10 +71,14 @@ public class ModuleViewPanel extends UiPart<Region> {
             .orElse("There are no preclusions for this module."));
         semesterData.setItems(module.getSemesterDetails().getAsObservableList());
         semesterData.setCellFactory(listView -> new ModuleSemesterDetailCell());
-        // Expands the accordion if the module is not yet tracked
-        moduleDetails.setExpandedPane(moduleDetailsPane);
+
+        // GUi to show to the user if tracked
         if (module instanceof Trackable) {
-            moduleDetails.setExpandedPane(null);
+            // Sets the accordions accordingly
+            linksAccordion.setExpandedPane(linksAccordionPane);
+            deadlinesAccordion.setExpandedPane(deadlinesAccordionPane);
+
+            // Sets the data accordingly
             Trackable trackedModule = ((Trackable) module);
             List<Deadline> deadlineList = trackedModule.getDeadlineList();
             Text deadlineTitle = new Text("Deadline:  \n");
@@ -72,7 +87,6 @@ public class ModuleViewPanel extends UiPart<Region> {
             deadline.getChildren().add(deadlineTitle);
             for (int i = 0; i < deadlineList.size(); i++) {
                 Text text = new Text(trackedModule.getDeadlineTask(i));
-                //text.setFont(Font.font ("Verdana", 15));
                 if (deadlineList.get(i).getTag().equals("HIGH")) {
                     text.setFill(Color.ORANGERED);
                 } else if (deadlineList.get(i).getTag().equals("MEDIUM")) {
@@ -90,7 +104,14 @@ public class ModuleViewPanel extends UiPart<Region> {
             links.setPrefWrapLength(500);
             links.setHgap(10);
             links.setVgap(5);
+
+            return;
         }
+
+        // Gui to show to the user if archived
+        moduleDetails.setExpandedPane(moduleDetailsPane);
+        moduleViewVBox.getChildren().remove(linksAccordion);
+        moduleViewVBox.getChildren().remove(deadlinesAccordion);
     }
 
     /**
