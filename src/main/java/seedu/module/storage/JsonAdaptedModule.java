@@ -1,6 +1,5 @@
 package seedu.module.storage;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.module.commons.exceptions.IllegalValueException;
-import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.ArchivedModuleList;
 import seedu.module.model.module.TrackedModule;
@@ -58,8 +56,7 @@ class JsonAdaptedModule {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted module.
      */
-    public TrackedModule toModelType(ArchivedModuleList archivedModules) throws IllegalValueException, ParseException,
-            CommandException {
+    public TrackedModule toModelType(ArchivedModuleList archivedModules) throws IllegalValueException {
         if (moduleCode == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "moduleCode"));
         }

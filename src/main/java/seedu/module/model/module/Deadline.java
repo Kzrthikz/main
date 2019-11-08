@@ -5,17 +5,15 @@ import static java.util.Objects.requireNonNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import seedu.module.logic.commands.exceptions.CommandException;
-import seedu.module.logic.parser.exceptions.ParseException;
+import seedu.module.model.module.exceptions.DeadlineInvalidPriorityException;
+import seedu.module.model.module.exceptions.DeadlineMarkException;
+import seedu.module.model.module.exceptions.DeadlineParseException;
 
 /**
  * Represents Priority tags in Enum
  */
 enum Priority {
     HIGH, MEDIUM, LOW;
-    public boolean isValid() {
-        return true;
-    }
 }
 
 /**
@@ -34,7 +32,7 @@ public class Deadline {
     private boolean isInProgress;
     private String tag;
 
-    public Deadline (String description, String time, String tag) throws ParseException, CommandException {
+    public Deadline (String description, String time, String tag) throws DeadlineParseException {
         requireNonNull(description);
         this.description = description;
         this.time = time;
@@ -42,7 +40,7 @@ public class Deadline {
             isValidPriority(tag);
             this.tag = tag;
         } catch(IllegalArgumentException ex) {
-            throw new CommandException("invalid tag entered");
+            throw new DeadlineInvalidPriorityException("invalid tag entered");
         }
         this.date = parseDate(time);
     }
@@ -74,11 +72,11 @@ public class Deadline {
 
     /**
      * Marks the deadline task as undone.
-     * @throws CommandException when task is already undone.
+     * @throws DeadlineMarkException when task is already undone.
      */
-    public void markAsUndone() throws CommandException {
+    public void markAsUndone() {
         if (!isInProgress && !isDone) {
-            throw new CommandException("Deadline task already undone!");
+            throw new DeadlineMarkException("Deadline task already undone!");
         }
         isInProgress = false;
         isDone = false;
@@ -128,11 +126,11 @@ public class Deadline {
      * @param s Input string to be parsed.
      * @return The parsed Date object.
      */
-    protected static Date parseDate(String s) throws ParseException {
+    protected static Date parseDate(String s) throws DeadlineParseException {
         try {
             return parser.parse(s);
         } catch (IllegalArgumentException | java.text.ParseException e) {
-            throw new ParseException("Date and time not in dd/MM/yyyy HHmm format");
+            throw new DeadlineParseException("Date and time not in dd/MM/yyyy HHmm format");
         }
     }
 

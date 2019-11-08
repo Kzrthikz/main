@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import seedu.module.logic.commands.exceptions.CommandException;
-
 /**
  * Represents a TrackedModule in the ModuleList.
  */
@@ -76,7 +74,7 @@ public class TrackedModule implements Module, Trackable {
         deadlineList.markAllDone();
     }
 
-    public void markDeadlineTaskAsUndone(int taskListNum) throws CommandException {
+    public void markDeadlineTaskAsUndone(int taskListNum) {
         deadlineList.markDeadlineTaskAsUndone(taskListNum);
     }
 

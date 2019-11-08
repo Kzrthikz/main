@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import seedu.module.logic.commands.exceptions.CommandException;
-
 /**
  * Represents the DeadlineList of a TrackedModule.
  */
@@ -53,7 +51,7 @@ public class DeadlineList {
         }
     }
 
-    public void markDeadlineTaskAsUndone(int taskListNum) throws CommandException {
+    public void markDeadlineTaskAsUndone(int taskListNum) {
         deadlineList.get(taskListNum).markAsUndone();
     }
 

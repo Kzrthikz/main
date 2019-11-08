@@ -8,11 +8,11 @@ import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_LIST_NUMBER;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.module.logic.commands.deadlinecommands.DeadlineCommand;
-import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.logic.parser.ArgumentMultimap;
 import seedu.module.logic.parser.ArgumentTokenizer;
 import seedu.module.logic.parser.Parser;
 import seedu.module.logic.parser.exceptions.ParseException;
+import seedu.module.model.module.exceptions.DeadlineParseException;
 
 /**
  * Parses input arguments and creates a new DeadlineCommand object.
@@ -70,10 +70,8 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
             } else {
                 throw new ParseException("Command not recognised");
             }
-        } catch(CommandException e) {
+        } catch(ParseException | DeadlineParseException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, e));
-        } catch(ParseException e) {
-            throw new ParseException("Invalid");
         }
     }
 }

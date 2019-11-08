@@ -11,6 +11,7 @@ import seedu.module.logic.parser.ArgumentMultimap;
 import seedu.module.logic.parser.ParserUtil;
 import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.model.module.Deadline;
+import seedu.module.model.module.exceptions.DeadlineParseException;
 
 /**
  * Parses input arguments and creates a new AddDeadlineCommand object.
@@ -24,7 +25,7 @@ public class AddDeadlineCommandParser {
      * @return AddDeadlineCommand
      * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddDeadlineCommand parse(ArgumentMultimap argsMultimap) throws ParseException, CommandException {
+    public AddDeadlineCommand parse(ArgumentMultimap argsMultimap) throws ParseException, DeadlineParseException {
         Index index = ParserUtil.parseIndex(argsMultimap.getPreamble());
         if (argsMultimap.getValue(PREFIX_DESCRIPTION).isPresent() && argsMultimap.getValue(PREFIX_TIME).isPresent()
                 && argsMultimap.getValue(PREFIX_TAG).isPresent()) {
@@ -34,8 +35,7 @@ public class AddDeadlineCommandParser {
             Deadline deadline = new Deadline(description, time, tag);
             return new AddDeadlineCommand(index, deadline);
         } else {
-            //throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
-            throw new ParseException("Invalid command format");
+            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
     }
 }
