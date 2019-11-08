@@ -34,7 +34,8 @@ public class AddDeadlineCommandParser {
             Deadline deadline = new Deadline(description, time, tag);
             return new AddDeadlineCommand(index, deadline);
         } else {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            //throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            throw new ParseException("Invalid command format");
         }
     }
 }

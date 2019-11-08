@@ -16,6 +16,7 @@ import seedu.module.logic.commands.HelpCommand;
 import seedu.module.logic.commands.ListCommand;
 import seedu.module.logic.commands.ViewCommand;
 import seedu.module.logic.commands.deadlinecommands.DeadlineCommand;
+import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.logic.commands.linkcommands.LinkCommand;
 import seedu.module.logic.parser.deadlinecommandparsers.DeadlineCommandParser;
 import seedu.module.logic.parser.exceptions.ParseException;
@@ -37,7 +38,7 @@ public class ModuleBookParser {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException {
+    public Command parseCommand(String userInput) throws ParseException, CommandException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));

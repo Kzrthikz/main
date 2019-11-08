@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.EnumSet;
 
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.logic.parser.exceptions.ParseException;
@@ -25,6 +24,8 @@ enum Priority {
  */
 public class Deadline {
     public static final String MESSAGE_CONSTRAINTS = "Not a valid Deadline";
+    public static final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy, hh:mm aaa");
+    public static final SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy HHmm");
     protected Date date;
 
     private String description;
@@ -35,22 +36,15 @@ public class Deadline {
 
     public Deadline (String description, String time, String tag) throws ParseException, CommandException {
         requireNonNull(description);
-        int maxLength = 70;
-        if (description.length() > maxLength) {
-            description = description.substring(0, maxLength);
-        }
         this.description = description;
         this.time = time;
-        if (!isValidPriority(tag)) {
+        try {
+            isValidPriority(tag);
             this.tag = tag;
-        } else {
-            throw new CommandException("Not a valid priority tag");
+        } catch(IllegalArgumentException ex) {
+            throw new CommandException("invalid tag entered");
         }
-        if (isDateValid(time)) {
-            this.date = parseDate(time);
-        } else {
-            throw new CommandException("Date and time not in dd/MM/yyyy HHmm format");
-        }
+        this.date = parseDate(time);
     }
 
     /**
@@ -58,25 +52,8 @@ public class Deadline {
      * @param tag priority tag.
      * @return true if input tag is valid, false otherwise.
      */
-    public boolean isValidPriority(String tag) {
-        EnumSet<Priority> except = EnumSet.of(Priority.HIGH, Priority.MEDIUM, Priority.LOW);
-        return !except.contains(Priority.valueOf(tag));
-    }
-
-    /**
-     * Validates date and time.
-     * @param date date in String.
-     * @return true if input date is valid false if input date is invalid.
-     */
-    public static boolean isDateValid(String date) {
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HHmm");
-            df.setLenient(false);
-            df.parse(date);
-            return true;
-        } catch (java.text.ParseException e) {
-            return false;
-        }
+    public void isValidPriority(String tag) {
+        Priority.valueOf(tag);
     }
 
     /**
@@ -152,7 +129,6 @@ public class Deadline {
      * @return The parsed Date object.
      */
     protected static Date parseDate(String s) throws ParseException {
-        SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy HHmm");
         try {
             return parser.parse(s);
         } catch (IllegalArgumentException | java.text.ParseException e) {
@@ -167,13 +143,12 @@ public class Deadline {
      * @return The string representation in our format.
      */
     protected static String stringifyDate(Date d) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy, hh:mm aaa");
         return formatter.format(d);
     }
 
     @Override
     public String toString() {
-        return "[" + getStatus() + "] " + description + ", " + stringifyDate(date) + "\n";
+        return "[" + getStatus() + "] " + description + ", due by : " + stringifyDate(date) + "\n";
     }
 
     @Override

@@ -70,8 +70,10 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
             } else {
                 throw new ParseException("Command not recognised");
             }
-        } catch (ParseException | CommandException e) {
+        } catch(CommandException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, e));
+        } catch(ParseException e) {
+            throw new ParseException("Invalid");
         }
     }
 }
