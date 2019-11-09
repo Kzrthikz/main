@@ -2,11 +2,9 @@ package seedu.module.model.module;
 
 import static java.util.Objects.requireNonNull;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.module.exceptions.DeadlineInvalidPriorityException;
 import seedu.module.model.module.exceptions.DeadlineMarkException;
 import seedu.module.model.module.exceptions.DeadlineParseException;
