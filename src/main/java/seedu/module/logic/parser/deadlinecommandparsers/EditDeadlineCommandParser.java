@@ -11,7 +11,6 @@ import seedu.module.logic.commands.deadlinecommands.EditDeadlineTimeCommand;
 import seedu.module.logic.parser.ArgumentMultimap;
 import seedu.module.logic.parser.ParserUtil;
 import seedu.module.logic.parser.exceptions.ParseException;
-import seedu.module.model.module.Deadline;
 
 /**
  * Parses input arguments and edits the deadline object.

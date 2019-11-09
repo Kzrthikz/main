@@ -72,8 +72,8 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
             } else {
                 throw new ParseException("Command not recognised");
             }
-        } catch(ParseException | DeadlineParseException | DeadlineInvalidPriorityException | DeadlineMarkException e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, e.getMessage()),e);
+        } catch (ParseException | DeadlineParseException | DeadlineInvalidPriorityException | DeadlineMarkException e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, e.getMessage()), e);
         }
     }
 }

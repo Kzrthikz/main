@@ -12,7 +12,6 @@ import seedu.module.commons.exceptions.IllegalValueException;
 import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.ArchivedModuleList;
 import seedu.module.model.module.TrackedModule;
-import seedu.module.model.module.exceptions.DeadlineParseException;
 
 /**
  * Jackson-friendly version of {@link TrackedModule}.
@@ -57,7 +56,7 @@ class JsonAdaptedModule {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted module.
      */
-    public TrackedModule toModelType(ArchivedModuleList archivedModules) throws IllegalValueException, DeadlineParseException {
+    public TrackedModule toModelType(ArchivedModuleList archivedModules) throws IllegalValueException {
         if (moduleCode == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "moduleCode"));
         }

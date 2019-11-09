@@ -5,8 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import seedu.module.commons.exceptions.IllegalValueException;
-import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.model.module.exceptions.DeadlineInvalidPriorityException;
 import seedu.module.model.module.exceptions.DeadlineMarkException;
 import seedu.module.model.module.exceptions.DeadlineParseException;
@@ -24,8 +22,8 @@ enum Priority {
  */
 public class Deadline {
     public static final String MESSAGE_CONSTRAINTS = "Not a valid Deadline";
-    public static final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy, hh:mm aaa");
-    public static final SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy HHmm");
+    public static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd MMM yyyy, hh:mm aaa");
+    public static final SimpleDateFormat PARSER = new SimpleDateFormat("dd/MM/yyyy HHmm");
     protected Date date;
 
     private String description;
@@ -42,15 +40,15 @@ public class Deadline {
         try {
             isValidPriority(tag);
             this.tag = tag;
-        } catch(IllegalArgumentException ex) {
-            throw new DeadlineInvalidPriorityException("invalid priority entered. Priority can be HIGH, MEDIUM or LOW.");
+        } catch (IllegalArgumentException ex) {
+            throw new DeadlineInvalidPriorityException("invalid priority entered. Priority can be HIGH, "
+                    + "MEDIUM or LOW.");
         }
     }
 
     /**
      * Validates priority tag.
-     * @param tag priority tag.
-     * @return true if input tag is valid, false otherwise.
+     * @param tag
      */
     public void isValidPriority(String tag) {
         Priority.valueOf(tag);
@@ -77,7 +75,7 @@ public class Deadline {
      * @throws DeadlineMarkException when task is already undone.
      */
     public void markAsUndone() {
-        if(!isInProgress && !isDone) {
+        if (!isInProgress && !isDone) {
             throw new DeadlineMarkException("Deadline task already undone!");
         } else {
             isInProgress = false;
@@ -131,7 +129,7 @@ public class Deadline {
      */
     protected static Date parseDate(String s) throws DeadlineParseException {
         try {
-            return parser.parse(s);
+            return PARSER.parse(s);
         } catch (IllegalArgumentException | java.text.ParseException e) {
             throw new DeadlineParseException("Date and time not in dd/MM/yyyy HHmm format");
         }
@@ -144,7 +142,7 @@ public class Deadline {
      * @return The string representation in our format.
      */
     protected static String stringifyDate(Date d) {
-        return formatter.format(d);
+        return FORMATTER.format(d);
     }
 
     @Override

@@ -9,7 +9,8 @@ public abstract class DeadlineCommand extends Command {
 
     public static final String COMMAND_WORD = "deadline";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds, deletes, edits, deletes, marks as done or in progress to a Module.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds, deletes, edits, deletes, marks as done or"
+            + " in progress to a Module.\n"
             + "Click or type \"help\" for more assistance. \n"
             + "Parameters: " + "Action \n"
             + "Example: " + COMMAND_WORD + " 1 a/add "
