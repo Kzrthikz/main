@@ -365,7 +365,7 @@ the `TrackedModule` list index (i.e 2) which the `Deadline` object will be added
 
 Step 6. `LogicManager` would execute `AddDeadlineCommand#execute()`,
 checks whether there is an existing module,
-then adds the `TrackedModule`.
+then adds to the `TrackedModule`.
 
 Step 7. `AddDeadlineCommand` would return a `CommandResult`
 to the `LogicManager`.
