@@ -1,0 +1,98 @@
+= Murugesan Karthika - Project Portfolio
+ :site-section: AboutUs
+ :imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ModuleBook
+
+== Overview
+
+My team of four cs2103T software engineering students and I were tasked with enhancing a basic command line interface
+desktop addressbook application for our Software Engineering project. We chose to morph it into a module management
+cum planning system called ModuleBook.
+
+This application is tailored to meet the needs of NUS students’ module management problems. It enables students to
+find modules, plan modules for semesters, manage module-specific deadlines and quick-links. ModuleBook is a desktop
+application where user interacts with it using CLI, and it has GUI created with JavaFX. It is written in Java.
+
+This is what our projects look like:
+
+.The graphic user interface for ModuleBook.
+image::ModuleBookUILayout.png[]
+
+My role was to design and write codes for the management of module deadline feature. The following sections illustrate
+these enhancements in more details, as well as the relevant documentation I have added to the user and developer guides
+in relation to these enhancements.
+
+
+== Summary of contributions
+
+This section shows a summary of my coding, documentation, and other helpful contributions to the team project.
+
+* *Major Enhancement:*
+Added the ability to add, edit, delete, mark as done or in-progress, tag and sort the deadline tasks specific to
+each module.
+
+** What it does: Allows users to input deadline tasks with description, date, time and priority tag using Add command.
+Deadline task is colored to indicate priority. Deadline tasks are sorted according to priority, date and time.
+Users can edit description, date and time of an existing deadline task using Edit command. Delete command removes
+the deadline task. Done and in-progress marks the deadline task’s status as done and in-progress respectively.
+Users can undo done and in-progress marking via Undone.
+
+** Justification: This is especially beneficial feature to NUS students as it helps students to keep track of the
+surmountable deadlines. Since deadlines are found in various platforms such as emails, Luminus and lecture
+announcements, students can now add and manage all deadline in one place, ModuleBook. Deadline feature is extremely
+flexible to use as users can easily edit the due date and time if deadlines are rescheduled. Students can simply mark
+deadlines as done, in progress and undo to constantly track their progress. Deadline feature is found in Module view
+which allows users to easily navigate and check the deadline tasks.
+
+** Highlights: This enhancement enables automatic sorting of deadlines according to priority, date and time when user
+adds a deadline task. There is no need for users to sort again after adding deadline tasks.
+
+** Credits: Module information is directly adapted from API provided by NUSMods.
+
+* *Minor Enhancement:* Users can enter deadline commands from anywhere in the ModuleBook, both the
+homepage and Module view. Refractored deadline commands and parsers.
+
+* *Code contributed:* https://tinyurl.com/y5j3e4ua[Code contributed]
+
+* *Other contributions:*
+
+** Project management:
+*** Managed all the 4 releases, from `v1.1` to `v1.4`  on GitHub.
+
+** Enhancements to existing features:
+*** Write codes for exception and error handling (Pull requests
+https://github.com/AY1920S1-CS2103T-W13-1/main/pull/147[#147],
+https://github.com/AY1920S1-CS2103T-W13-1/main/pull/160[#160] )
+*** Write tests for deadline tasks
+** Documentation:
+*** Updated the contact us page, deadline section of developer guide and user guide.
+** Community:
+*** PRs reviewed:
+*** Reported bugs and suggestions for other teams in the class: https://github.com/Kzrthikz/ped/issues[PE Dry Run]
+
+== Contributions to the User Guide
+
+We had to update the original Addressbook User Guide with instructions for the enhancements that we had added.
+The following is an excerpt from our ModuleBook User Guide, showing additions that
+I have made for the *3.9 Manage deadline tasks*.
+
+|===
+|_Given below are sections I contributed to the User Guide.
+They showcase my ability to write documentation targeting end-users.
+|===
+include::../UserGuide.adoc[tag=deadline]
+
+
+== Contributions to the Developer Guide
+Implementation details for the respective deadline command is explained in the Developer guide.
+The example of AddDeadlineCommand is used to demonstrate the implementation as the other commands are fairly similar.
+Activity diagram for the execution of  AddDeadlineCommand is added.
+Explained the mechanism of how add deadline behaves from user input to adding deadline task to deadline list.
+How the add deadline operation works with the interaction of relevant classes is shown using a sequence diagram.
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+include::../DeveloperGuide.adoc[tag=deadline]
