@@ -73,11 +73,22 @@ Format: `list`
 
 === Viewing a module: `view`
 
+==== Method 1: Typing the command
+
 Views a module and enters the module view. Can be a tracked module or an archived module.
 
 Format: `view <MODULE_CODE>`
 
 Example: `view cs1231`
+
+==== Method 2: Double clicking on the module in the list
+
+Alternatively, you may simply view the module by double clicking on the module in the module list.
+
+image::ViewCommandGUiStep1.png[width="790"]
+
+image::ViewCommandGUiStep2.png[width="790"]
+
 
 === Return from module view: `back`
 Returns from the module view.
@@ -94,26 +105,34 @@ It is possible to use any number or combination of filters. Prefixes not present
 
 ****
 * Prefixes: (case sensitive)
+** `all\` : List all the modules. *Overrides* all other prefixes.
+*** Example: `find mod\ cs all\` `all\` will override mod\ and list all the modules.
 ** `mod\` : Find all modules with *module code* that contains the given *keyword(s)*.
-*** Example: `find mod\ cs ma st` will list all modules with module code containing `cs` or `ma` or `st`.
-** `title\` : Find all modules with *title* that contains the given *sentence*.
-*** Example: `find title\ software engineering` will list all modules with titles containing `"software engineering"`.
-** `desc\` : Find all modules with *description* that contains the given *sentence*.
-*** Example: `find desc\ software engineering` will list all modules with description containing `"software engineering"`.
+*** Example: `find mod\ cs ma st` will list all modules with module code containing `cs` *or* `ma` *or* `st`.
+** `title\` : Find all modules with *title* that contains the given *keyword(s)*.
+*** Example: `find title\ software engineering` will list all modules with titles containing `"software" *and* "engineering"`.
+** `desc\` : Find all modules with *description* that contains the given *keywords(s)*.
+*** Example: `find desc\ software engineering` will list all modules with description containing `"software" *and* "engineering"`.
 ** `prereq\` : Find all modules with *prerequisites* that match the given *keyword(s)*.
-*** Example: `find prereq\ cs2030 cs2040` will list all modules with prerequisite of `cs2030` or `cs2040`.
+*** Example: `find prereq\ cs2030 cs2040` will list all modules with prerequisite of `cs2030` *or* `cs2040`.
 ** `preclu\` : Find all modules with *preclusion* that match the given *keyword(s)*.
-*** Example: `find preclu\ cs2030 cs2040` will list all modules with preclusion of `cs2030` or `cs2040`.
+*** Example: `find preclu\ cs2030 cs2040` will list all modules with preclusion of `cs2030` *or* `cs2040`.
 ** `sem\` : Find all modules offered in a particular sem 1 - 4. (Sem 3 and 4 are special terms 1 and 2).
-*** Example: `find sem\ 1 3` will list all modules offered in semester 1 or special term 1.
+*** Example: `find sem\ 1 3` will list all modules offered in semester 1 *or* special term 1.
 * The prefixes can be used together in any order to filter modules that passes all the search requirements.
 ** Example: `find mod\ cs2 cs3 desc\ software engineering sem\ 1` will show all modules with module code containing `cs2`
-or `cs3` with description containing `"software engineering"` offered in semester 1.
+*or* `cs3` with description containing `"software"` *and* `"engineering"` offered in semester 1.
 * The keywords are case insensitive. e.g `cs2103t` will match `CS2103T`.
+* *Keywords* used in *title\* and *desc\* are tolerant of minor *spelling mistakes*.
+** Example: `find desc\ enginering` will display results similar to `find desc\ engineering`.
+* Search is performed using string matching, commonly used keywords will therefore produce many search results.
+* Invalid prefixes and keywords before a valid prefix will be ignored.
+** Eg: `find INVALID\ invalidKeyword mod\ cs` the `INVALID\ invalidKeyword` will be ignored.
 ****
 [NOTE]
-title\ and desc\ will seach a single sentence while mod\, prereq\, preclu\ and sem\ will search for all modules with any of the keywords.
-
+Keywords are searched using *"OR"* relation (apart from `title\` and `desc\` which uses an *"AND"* relation.) while predicates are seached using
+*"AND"* relations.
+For example, `find mod\ cs ma title\ linear algebra` will produce results of all modules with (module code containing `cs` *OR* `ma`) *AND* (title containing `linear` *AND* `algebra`)
 
 [TIP]
 Modules are imported from NUSMods database.
@@ -155,8 +174,9 @@ Examples:
 Format: `deadline MODULE_LIST_NUM a/add d/DESCRIPTION t/TIME p/PRIORITY`
 
 Adds deadline task consisting of description, time and priority tag to the respective module.
-If deadline list is empty, creates a list. Else, adds to the end of the list. Priority tags can be
-`HIGH`, `MEDIUM` OR `LOW`.
+Priority tags can be `HIGH`, `MEDIUM` OR `LOW`. Deadline tasks tagged as `HIGH` is displayed in red, `MEDIUM` in yellow
+and `LOW` in green. Deadline list is sorted according to priority and deadline date and time.
+All fields are compulsory.
 
 Example: `deadline 1 a/add d/tutorial 1 t/22/10/2019 2359 p/HIGH`
 
@@ -183,38 +203,36 @@ Example: `deadline 3 a/edit task/2 t/29/10/2018 2359`
 Format: `deadline MODULE_LIST_NUM a/done task/TASK_NUMBER_IN_LIST`
 
 Marks the deadline task numbered in deadline list
-as *done* with a tick on the checkbox for the respective module.
+as *done* with a tick.
 
 Example: `deadline 1 a/done task/2`
+
+==== `doneAll`
+
+Format: `deadline MODULE_LIST_NUM a/doneAll`
+
+Marks all the deadline tasks in deadline list
+as *done* with a tick.
+
+Example: `deadline 1 a/doneAll`
 
 ==== `in Progress`
 
 Format: `deadline MODULE_LIST_NUM a/inProgress task/TASK_NUMBER_IN_LIST`
 
 Marks the deadline task numbered in deadline list
-as *in-progress* with a dash on the checkbox for the respective module.
+as *in-progress* with a dash.
 
 Example: `deadline 1 a/inProgress task/1`
 
-==== `sort`(Coming in mid V1.4)
+==== `undone`
 
-1.Sort by Time
+Format: `deadline MODULE_LIST_NUM a/undone task/TASK_NUMBER_IN_LIST`
 
-Format: `deadline MODULE_LIST_NUM a/sort by/time`
+Marks the deadline task numbered in deadline list
+as *undone* with empty space.
 
-Sorts deadline tasks according to time, latest deadline at the top and later ones below.
-
-Example: `deadline 1 a/sort by/time`
-
-
-2.Sort by Priority
-
-Format: `deadline MODULE_LIST_NUM a/sort by/priority`
-
-Sorts deadline tasks according to priority, highest priority at the top, followed
-by medium priority and lastly low priority at the bottom.
-
-Example: `deadline 2 a/sort by/priority`
+Example: `deadline 1 a/undone task/1`
 
 ==== `delete`
 
@@ -224,13 +242,21 @@ Deletes deadline task numbered from the respective module.
 
 Example: `deadline 1 a/delete task/2`
 
+==== `deleteAll`
+
+Format: `deadline MODULE_LIST_NUM a/deleteAll`
+
+Deletes all the deadline tasks from the respective module.
+
+Example: `deadline 1 a/deleteAll`
+
 === Manage links in modules: `link`
 
 Link commands are only available when viewing a module and only valid on currently displayed tracked modules.
 
 ==== `add`
 
-Format: `link add n/LINK_TITLE l/LINK_URL`
+Format: `link add n/LINK_NAME l/LINK_URL`
 
 Adds link provided to the respective module.
 
@@ -238,15 +264,15 @@ Example: `link add n/course website l/https://www.comp.nus.edu.sg/~cs1231/`
 
 ==== `edit`
 
-Format: `link edit n/LINK_TITLE [nt/EDITED_TITLE nl/EDITED_LINK]`
+Format: `link edit n/LINK_NAME [nn/EDITED_NAME nl/EDITED_LINK]`
 
 Edits the link identified by its current title for the respective module.
 
-Example: `link edit t/course website nt/module website`
+Example: `link edit n/course website nn/module website`
 
 ==== `go`
 
-Format: `link go n/LINK_TITLE`
+Format: `link go n/LINK_NAME`
 
 Launches the link in the user system's default browser.
 
@@ -254,11 +280,19 @@ Example: `link go n/module website`
 
 ==== `delete`
 
-Format: `link delete n/LINK_TITLE`
+Format: `link delete n/LINK_NAME`
 
 Deletes the link with the given link title in the respective module.
 
 Example: `link delete n/module website`
+
+==== `mark`/`unmark`
+
+Format: `link mark n/LINK_NAME`
+
+Marks/unmarks the link with the given link title in the respective module
+
+Example: `link mark n/module website`
 
 === Saving the data
 
