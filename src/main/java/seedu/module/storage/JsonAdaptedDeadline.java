@@ -2,7 +2,9 @@ package seedu.module.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.module.commons.exceptions.IllegalValueException;
 import seedu.module.model.module.Deadline;
+import seedu.module.model.module.exceptions.DeadlineParseException;
 
 /**
  * Jackson-friendly version of {@Deadline Deadline}
@@ -31,7 +33,17 @@ public class JsonAdaptedDeadline {
         this.tag = source.getTag();
     }
 
-    public Deadline toModelType() {
-        return new Deadline(description, time, tag);
+    /**
+     * models deadline in storage
+     * @return Deadline object
+     * @throws IllegalValueException
+     */
+    public Deadline toModelType() throws IllegalValueException {
+        try {
+            return new Deadline(description, time, tag);
+        } catch (DeadlineParseException e) {
+            throw new IllegalValueException(e.getMessage());
+        }
+        //return new Deadline(description, time, tag);
     }
 }
