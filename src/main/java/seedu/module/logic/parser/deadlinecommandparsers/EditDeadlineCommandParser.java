@@ -36,7 +36,7 @@ public class EditDeadlineCommandParser {
             int taskListNum = Integer.parseInt(argsMultimap.getValue(PREFIX_TASK_LIST_NUMBER).get().trim());
             return new EditDeadlineTimeCommand(index, time, taskListNum);
         } else {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            throw new ParseException(EditDeadlineCommand.MESSAGE_USAGE);
         }
     }
 }

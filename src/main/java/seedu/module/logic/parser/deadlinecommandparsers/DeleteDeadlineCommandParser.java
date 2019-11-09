@@ -33,7 +33,7 @@ public class DeleteDeadlineCommandParser {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteDeadlineTaskCommand.MESSAGE_USAGE), e);
             }
         } else {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            throw new ParseException(DeleteDeadlineTaskCommand.MESSAGE_USAGE);
         }
 
     }

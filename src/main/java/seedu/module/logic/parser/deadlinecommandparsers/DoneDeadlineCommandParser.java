@@ -32,7 +32,7 @@ public class DoneDeadlineCommandParser {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DoneDeadlineCommand.MESSAGE_USAGE), e);
             }
         } else {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            throw new ParseException(DoneDeadlineCommand.MESSAGE_USAGE);
         }
     }
 }

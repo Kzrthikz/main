@@ -32,7 +32,7 @@ public class UndoneDeadlineCommandParser {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoneDeadlineCommand.MESSAGE_USAGE), e);
             }
         } else {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            throw new ParseException(UndoneDeadlineCommand.MESSAGE_USAGE);
         }
     }
 }

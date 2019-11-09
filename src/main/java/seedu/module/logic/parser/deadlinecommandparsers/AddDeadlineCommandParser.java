@@ -1,17 +1,16 @@
 package seedu.module.logic.parser.deadlinecommandparsers;
 
+import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.deadlinecommands.AddDeadlineCommand;
-import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.logic.parser.ArgumentMultimap;
 import seedu.module.logic.parser.ParserUtil;
 import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.model.module.Deadline;
-import seedu.module.model.module.exceptions.DeadlineParseException;
 
 /**
  * Parses input arguments and creates a new AddDeadlineCommand object.
@@ -25,7 +24,7 @@ public class AddDeadlineCommandParser {
      * @return AddDeadlineCommand
      * @throws ParseException if the user input does not conform the expected format.
      */
-    public AddDeadlineCommand parse(ArgumentMultimap argsMultimap) throws ParseException, DeadlineParseException {
+    public AddDeadlineCommand parse(ArgumentMultimap argsMultimap) throws ParseException {
         Index index = ParserUtil.parseIndex(argsMultimap.getPreamble());
         if (argsMultimap.getValue(PREFIX_DESCRIPTION).isPresent() && argsMultimap.getValue(PREFIX_TIME).isPresent()
                 && argsMultimap.getValue(PREFIX_TAG).isPresent()) {
@@ -35,7 +34,7 @@ public class AddDeadlineCommandParser {
             Deadline deadline = new Deadline(description, time, tag);
             return new AddDeadlineCommand(index, deadline);
         } else {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            throw new ParseException(AddDeadlineCommand.MESSAGE_USAGE);
         }
     }
 }

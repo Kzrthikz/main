@@ -96,7 +96,8 @@ public class TrackedModule implements Module, Trackable {
      */
     public boolean hasDeadline(Deadline deadline) {
         for (Deadline d : deadlineList.getDeadlineList()) {
-            if(d.equals(deadline)) {
+            if(deadline.getDescription().equals(d.getDescription()) && deadline.getTime().equals(d.getTime())
+                    && deadline.getTag().equals(d.getTag())) {
                 return true;
             }
         }

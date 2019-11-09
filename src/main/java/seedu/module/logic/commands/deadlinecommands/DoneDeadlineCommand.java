@@ -20,7 +20,7 @@ public class DoneDeadlineCommand extends DeadlineCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the deadline task identified by the index and task number as done.\n"
-            + "Parameters: INDEX (must be a positive integer), \n"
+            + "Parameters: INDEX (must be a positive integer), "
             + "TASK(must be a positive integer) \n"
             + "Example: deadline 2 " + PREFIX_ACTION + " " + COMMAND_WORD + " " + PREFIX_TASK_LIST_NUMBER + " 1";
 

@@ -1,6 +1,7 @@
 package seedu.module.logic.parser.deadlinecommandparsers;
 
 import seedu.module.commons.core.index.Index;
+import seedu.module.logic.commands.deadlinecommands.AddDeadlineCommand;
 import seedu.module.logic.commands.deadlinecommands.DeleteAllDeadlineCommand;
 import seedu.module.logic.parser.ArgumentMultimap;
 import seedu.module.logic.parser.ParserUtil;
@@ -19,8 +20,12 @@ public class DeleteAllDeadlineCommandParser {
      * @throws ParseException if the user input does not conform the expected format.
      */
     public DeleteAllDeadlineCommand parse(ArgumentMultimap argsMultimap) throws ParseException {
-        Index index = ParserUtil.parseIndex(argsMultimap.getPreamble());
-        return new DeleteAllDeadlineCommand(index);
+        try {
+            Index index = ParserUtil.parseIndex(argsMultimap.getPreamble());
+            return new DeleteAllDeadlineCommand(index);
+        } catch(ParseException e) {
+            throw new ParseException(String.format(DeleteAllDeadlineCommand.MESSAGE_USAGE));
+        }
     }
 }
 

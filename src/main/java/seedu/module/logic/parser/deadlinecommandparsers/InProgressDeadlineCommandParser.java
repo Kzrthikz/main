@@ -32,7 +32,7 @@ public class InProgressDeadlineCommandParser {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, InProgressDeadlineCommand.MESSAGE_USAGE), e);
             }
         } else {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+            throw new ParseException(InProgressDeadlineCommand.MESSAGE_USAGE);
         }
     }
 }

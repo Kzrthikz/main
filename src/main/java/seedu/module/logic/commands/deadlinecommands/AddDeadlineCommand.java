@@ -19,12 +19,12 @@ public class AddDeadlineCommand extends DeadlineCommand {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds  a Deadline task to the Module. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds  a Deadline task to the Module. \n"
             + "Parameters: "
-            + "INDEX (must be a positive integer) "
-            + PREFIX_ACTION + "add\n"
-            + PREFIX_DESCRIPTION + "DESCRIPTION\n"
-            + PREFIX_TIME + "TIME\n"
+            + "INDEX (must be a positive integer) \n"
+            + PREFIX_ACTION + "add "
+            + PREFIX_DESCRIPTION + "DESCRIPTION "
+            + PREFIX_TIME + "TIME \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_DESCRIPTION + " tutorial 1 " + PREFIX_TIME + "2/2/2019 2359 "
             + PREFIX_TAG + " HIGH";

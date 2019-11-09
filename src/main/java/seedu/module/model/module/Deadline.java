@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import seedu.module.commons.exceptions.IllegalValueException;
+import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.model.module.exceptions.DeadlineInvalidPriorityException;
 import seedu.module.model.module.exceptions.DeadlineMarkException;
 import seedu.module.model.module.exceptions.DeadlineParseException;
@@ -36,13 +38,13 @@ public class Deadline {
         requireNonNull(description);
         this.description = description;
         this.time = time;
+        this.date = parseDate(time);
         try {
             isValidPriority(tag);
             this.tag = tag;
         } catch(IllegalArgumentException ex) {
-            throw new DeadlineInvalidPriorityException("invalid tag entered");
+            throw new DeadlineInvalidPriorityException("invalid priority entered. Priority can be HIGH, MEDIUM or LOW.");
         }
-        this.date = parseDate(time);
     }
 
     /**
@@ -75,11 +77,12 @@ public class Deadline {
      * @throws DeadlineMarkException when task is already undone.
      */
     public void markAsUndone() {
-        if (!isInProgress && !isDone) {
+        if(!isInProgress && !isDone) {
             throw new DeadlineMarkException("Deadline task already undone!");
+        } else {
+            isInProgress = false;
+            isDone = false;
         }
-        isInProgress = false;
-        isDone = false;
     }
 
     public String getStatus() {
