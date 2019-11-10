@@ -1,6 +1,6 @@
 = Murugesan Karthika - Project Portfolio
- :site-section: AboutUs
- :imagesDir: ../images
+:site-section: AboutUs
+:imagesDir: ../images
 :stylesDir: ../stylesheets
 
 == PROJECT: ModuleBook
