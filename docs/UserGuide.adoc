@@ -196,7 +196,7 @@ Example: `deadline 1 a/add d/tutorial 1 t/22/10/2019 2359 p/HIGH`
 
 Here is result of inputting the above command successfully.
 
-image::userguide/AddDeadlineUI.png[]
+image::userguide/AddDeadlineUI.png[width="790"]
 
 ==== `edit`
 
@@ -227,7 +227,7 @@ Example: `deadline 1 a/done task/2`
 
 Here is result of inputting the above command successfully.
 
-image::userguide/DoneDeadlineUI.png[]
+image::userguide/DoneDeadlineUI.png[width="790"]
 
 ==== `doneAll`
 
