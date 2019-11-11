@@ -194,6 +194,10 @@ All parameters are compulsory.
 
 Example: `deadline 1 a/add d/tutorial 1 t/22/10/2019 2359 p/HIGH`
 
+Here is result of inputting the above command successfully.
+
+image::userguide/AddDeadlineUI.png[]
+
 ==== `edit`
 
 * Edit Description
@@ -220,6 +224,10 @@ Marks the deadline task numbered in deadline list
 as *done* with a tick.
 
 Example: `deadline 1 a/done task/2`
+
+Here is result of inputting the above command successfully.
+
+image::userguide/DoneDeadlineUI.png[]
 
 ==== `doneAll`
 

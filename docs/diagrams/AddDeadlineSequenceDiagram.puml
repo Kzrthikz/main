@@ -51,8 +51,14 @@ deactivate ModuleBookParser
 LogicManager -> AddDeadlineCommand : execute()
 activate AddDeadlineCommand
 
-AddDeadlineCommand -> Model : updateFilteredModuleList(pred)
+AddDeadlineCommand -> Model : showAllTrackedModules()
 activate Model
+
+Model -> Model : updateDisplayedList()
+activate Model
+
+Model --> Model
+deactivate Model
 
 Model --> AddDeadlineCommand
 deactivate Model
