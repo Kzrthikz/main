@@ -34,6 +34,8 @@ public class Deadline {
 
     public Deadline (String description, String time, String tag) throws DeadlineParseException {
         requireNonNull(description);
+        requireNonNull(time);
+        requireNonNull(tag);
         this.description = description;
         this.time = time;
         this.date = parseDate(time);
@@ -160,7 +162,8 @@ public class Deadline {
         return other == this // short circuit if same object
                 || (other instanceof Deadline // instanceof handles nulls
                 && description.equals(((Deadline) other).description))
-                && time.equals(((Deadline) other).time); // state check
+                && time.equals(((Deadline) other).time)
+                && tag.equals(((Deadline) other).tag); // state check
     }
 
     @Override
